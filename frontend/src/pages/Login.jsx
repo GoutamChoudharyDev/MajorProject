@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BgImage from '../assets/bg-image-auth.jpeg'
 
+// import the React Icons................................
+import { MdEmail } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
+
 const Login = () => {
     // state for input 
     const [email, setEmail] = useState('');
@@ -49,6 +53,9 @@ const Login = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="relative">
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-lg">
+                            <MdEmail />
+                        </div>
                         <input
                             type="email"
                             placeholder="Email"
@@ -58,6 +65,9 @@ const Login = () => {
                         />
                     </div>
                     <div className="relative">
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-lg">
+                            <RiLockPasswordFill />
+                        </div>
                         <input
                             type="password"
                             placeholder="Password"
