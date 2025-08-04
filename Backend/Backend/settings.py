@@ -171,6 +171,7 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React frontend
+    "http://localhost:5173",
     "http://localhost:8000",  # Django development server   
 ]
+
