@@ -1,40 +1,72 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BgImage from '../assets/bg-image-auth.jpeg'
+import { Link } from 'react-router-dom';
 
 // import the React Icons................................
 import { FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
+import axios from 'axios';
 
 const Signup = () => {
 
     // useState for form inputs
-    const [username, setUsername] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [password2, setPassword2] = useState("");
 
     // useState for message
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
 
     // Handle Submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess('');
 
         // Form validation
-        if (!username || !email || !password) {
+        if (!username || !email || !password || !password2) {
             setError('All fields are required!');
             return;
         }
 
-        // when we submit then its set this default things..
-        setSuccess('Signup successful!');
-        setUsername('');
-        setEmail('');
-        setPassword('');
+        // Password and ConfirmPassword cheking
+        if (password !== password2) {
+            setError('Confirm password is Wrong!')
+            return;
+        }
+
+        //Connect React Frontend to Django using fetch..............
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
+                username,
+                email,
+                password,
+                password2,
+            });
+
+             // Show success message
+            setSuccess(response.data.message || 'Signup successful!');
+
+            // Clear form fields
+            setUsername('');
+            setEmail('');
+            setPassword('');
+
+            // Redirect to login
+            navigate('/login');
+
+        } catch (error) {
+            if (error.response && error.response.data) {
+                setError(error.response.data.error || 'Invalid credentials!');
+            } else {
+                setError('Network error');
+            }
+            console.log('Error:', error);
+        }
     };
 
     // Navigate
@@ -94,9 +126,23 @@ const Signup = () => {
                             className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-cyan-400 transition"
                         />
                     </div>
+                    <div className="relative">
+                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-lg">
+                            <RiLockPasswordFill />
+                        </div>
+                        <input
+                            type="password"
+                            placeholder="Confirm Password"
+                            value={password2}
+                            onChange={(e) => setPassword2(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-cyan-400 transition"
+                        />
+                    </div>
 
                     <div className="text-right text-sm">
-                        <a href="#" className="text-cyan-300 hover:underline">Forgot password?</a>
+                        <Link to="/forgot-password" className="text-cyan-300 hover:underline">
+                            Forgot password?
+                        </Link>
                     </div>
 
                     <button

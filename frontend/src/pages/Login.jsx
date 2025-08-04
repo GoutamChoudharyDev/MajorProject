@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BgImage from '../assets/bg-image-auth.jpeg'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // import the React Icons................................
 import { MdEmail } from "react-icons/md";
@@ -16,7 +18,7 @@ const Login = () => {
     const [success, setSuccess] = useState('');
 
     // Handle Submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess('');
@@ -27,10 +29,28 @@ const Login = () => {
             return;
         }
 
-        // After submit this field will be empty
-        setSuccess('Login Successfully!')
-        setEmail('');
-        setPassword('');
+        // Connect frontend with Django(Backend)......
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
+                email,
+                password
+            });
+
+            // After submit this field will be empty
+            setSuccess(response.data.message || 'Login Successfully!')
+            setEmail('');
+            setPassword('');
+            navigate('/');
+
+        } catch (error) {
+            if (error.response && error.response.data) {
+                setError(error.response.data.error || 'Invald Credentials');
+            } else {
+                setError('Network Error')
+            }
+            console.log("Error", error);
+        }
+
     };
 
     // Navigate 
@@ -78,7 +98,9 @@ const Login = () => {
                     </div>
 
                     <div className="text-right text-sm">
-                        <a href="#" className="text-cyan-300 hover:underline">Forgot password?</a>
+                        <Link to="/forgot-password" className="text-cyan-300 hover:underline">
+                            Forgot password?
+                        </Link>
                     </div>
 
                     <button
