@@ -171,15 +171,10 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOWED_ORIGINS = [
-<<<<<<< HEAD
     "http://localhost:5173",
     "http://localhost:8000",  # Django development server   
 ]
 
-=======
-    "http://localhost:5173",  # React frontend
-    "http://localhost:8000",  # Django development server   
-]
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
->>>>>>> bf557223401637fd406a346f5eae920d31c1f5d8
+
