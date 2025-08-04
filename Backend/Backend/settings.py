@@ -174,3 +174,5 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # React frontend
     "http://localhost:8000",  # Django development server   
 ]
+
+CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
