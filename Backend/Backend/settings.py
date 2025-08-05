@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "accounts",  # Custom app for user accounts
     "rest_framework",  # Django REST Framework for API development
     "rest_framework_simplejwt",  # JWT authentication for REST Framework
+    "rest_framework_simplejwt.token_blacklist",  # JWT token blacklist for logout
     "corsheaders",  # CORS headers for cross-origin requests
 ]
 
@@ -144,7 +145,7 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
-    "BLACKLIST_AFTER_ROTATION": False,
+    "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
 
 
