@@ -126,7 +126,7 @@ const Login = ({ setIsLoggedIn }) => {
                     Don’t have an account?{' '}
                     <span
                         className="text-cyan-300 font-medium hover:underline cursor-pointer"
-                        onClick={() => navigate("/signup")}
+                        onClick={() => navigate("/register")}
                     >
                         Signup
                     </span>
