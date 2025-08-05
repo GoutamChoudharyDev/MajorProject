@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
     // state for input 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,12 +36,23 @@ const Login = () => {
                 password
             });
 
-            // After submit this field will be empty
-            setSuccess(response.data.message || 'Login Successfully!')
-            setEmail('');
-            setPassword('');
-            navigate('/');
+            if (response.status === 200) {
+                const { access, refresh } = response.data;
 
+                // save token to localStorage
+                localStorage.setItem('access_token', access);
+                localStorage.setItem('refresh_token', refresh);
+
+                // Update login state
+                setIsLoggedIn(true);
+
+                setSuccess(response.data.message || 'Login Successfully!');
+                setEmail('');
+                setPassword('');
+
+                // Navigate only on successful login
+                navigate('/');
+            }
         } catch (error) {
             if (error.response && error.response.data) {
                 setError(error.response.data.error || 'Invald Credentials');
