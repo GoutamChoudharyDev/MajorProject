@@ -27,7 +27,8 @@ const Navbar = ({ isLoggedIn, handleLogout, onSearch }) => {
     return (
         <nav className="bg-gradient-to-r from-slate-900 via-gray-800 to-slate-900 p-4 shadow-xl rounded-2xl  mt-3 fixed top-0 left-1/2 transform -translate-x-1/2 w-[92%] z-50">
             <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-                {/* Logo & Toggle */}
+
+                {/* Logo & Title */}
                 <div className="flex justify-between w-full md:w-auto items-center mb-4 md:mb-0">
                     <Link to="/" className="flex items-center text-white lg:text-2xl md:text-xl font-extrabold tracking-wide">
                         <span>🏡</span>
@@ -41,8 +42,10 @@ const Navbar = ({ isLoggedIn, handleLogout, onSearch }) => {
                     <button onClick={toggleMenu} className="md:hidden text-white focus:outline-none">
                         <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             {isOpen ? (
+                                // "X" icon (close)
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                             ) : (
+                                // Three horizontal lines (menu)
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                             )}
                         </svg>
