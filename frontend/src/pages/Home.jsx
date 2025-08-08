@@ -1,5 +1,5 @@
 import Housebg from '../assets/houseBg2.jpeg'
-import Navbar from '../components/Header/Navbar'
+import Navbar from '../components/header/Navbar'
 
 const Home = ({ isLoggedIn, handleLogout }) => {
   return (
