@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './Card.css'
 // React Icons
-import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaRupeeSign } from "react-icons/fa";
 
 const Card = ({ title, location, price, description, images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -73,7 +73,9 @@ const Card = ({ title, location, price, description, images }) => {
           <FaMapMarkerAlt className="mr-1 text-red-500" />
           <span className="truncate">{location}</span>
         </div>
-        <p className="text-blue-600 font-bold mt-1">{price}</p>
+        <p className="text-blue-600 font-bold mt-1 flex items-center">
+          <FaRupeeSign className="mr-0.5" /> {price}
+        </p>
         <p className="text-gray-500 text-sm mt-2 line-clamp-3">{description}</p>
       </div>
     </div>
