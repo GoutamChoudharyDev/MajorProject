@@ -3,8 +3,12 @@ import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import About from './pages/About'
+import Contact from './pages/Contact'
 import axios from 'axios'
 import Listings from './pages/Listings'
+import PrivateRoute from './components/privateRoute/PrivateRoute'
+
 
 const App = () => {
   // To Navigate on the other page
@@ -58,10 +62,40 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home isLoggedIn={isLoggedIn} handleLogout={handleLogout} listings={listings} />} />
-        <Route path='/login' element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path='/register' element={<Signup />} />
-        <Route path='/listings' element={<Listings setListings={setListings} />} />
+        <Route
+          path='/'
+          element={<Home isLoggedIn={isLoggedIn} handleLogout={handleLogout} listings={listings} />}
+        />
+
+        <Route
+          path='/login'
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
+
+        <Route
+          path='/register'
+          element={<Signup />}
+        />
+
+        <Route
+          path='/about'
+          element={<About/>}
+        />
+
+        <Route
+          path='/contact'
+          element={<Contact/>}
+        />
+
+        {/* Protected Route */}
+        <Route
+          path='/listings'
+          element={
+            <PrivateRoute isAuthenticated={isLoggedIn}>
+              <Listings setListings={setListings} />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   )

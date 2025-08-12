@@ -209,7 +209,6 @@ const Listings = ({ setListings }) => {
           </div>
 
           {/* Slideshow Preview */}
-          {/* Slideshow Preview */}
           {previews.length > 0 && (
             <div className="relative mt-3 w-full aspect-[4/3] bg-black/20 rounded-xl overflow-hidden shadow-lg">
               {/* Main image */}
