@@ -86,28 +86,34 @@ WSGI_APPLICATION = "Backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Check if we're using PostgreSQL (for production/collaboration) or SQLite (for development)
-USE_POSTGRES = os.getenv('USE_POSTGRES', 'False').lower() == 'true'
+# USE_POSTGRES = os.getenv('USE_POSTGRES', 'False').lower() == 'true'
 
-if USE_POSTGRES:
+# if USE_POSTGRES:
     # PostgreSQL configuration for collaboration
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', 'major_project_db'),
-            'USER': os.getenv('DB_USER', 'postgres'),
-            'PASSWORD': os.getenv('DB_PASSWORD', ''),
-            'HOST': os.getenv('DB_HOST', 'localhost'),
-            'PORT': os.getenv('DB_PORT', '5432'),
-        }
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.getenv('DB_NAME', 'major_project_db'),
+        # 'USER': os.getenv('DB_USER', 'postgres'),
+        # 'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        # 'HOST': os.getenv('DB_HOST', 'localhost'),
+        # 'PORT': os.getenv('DB_PORT', '5432'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'major_project_db',
+        'USER': 'postgres',
+        'PASSWORD': 'admin12',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
-else:
-    # SQLite configuration for local development
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+}
+# else:
+#     # SQLite configuration for local development
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         }
+#     }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

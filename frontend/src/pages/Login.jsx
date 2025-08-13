@@ -36,6 +36,8 @@ const Login = ({ setIsLoggedIn }) => {
                 password
             });
 
+            // console.log("Login response:", response.data); // Add this line
+            
             if (response.status === 200) {
                 const { access, refresh } = response.data;
 

@@ -10,6 +10,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True},
         }   
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("This email is already registered. Please use a different email.")
+        return value
     
     # validate password and password2 match
     def validate(self, attrs):

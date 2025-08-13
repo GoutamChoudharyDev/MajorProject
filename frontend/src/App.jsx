@@ -20,6 +20,7 @@ const App = () => {
       // get refresh and access token from localStorage
       const refresh_token = localStorage.getItem('refresh_token');
       const access_token = localStorage.getItem('access_token');
+          
 
       await axios.post('http://127.0.0.1:8000/api/accounts/logout/',
         { refresh_token }, // send token in body
