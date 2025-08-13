@@ -7,8 +7,8 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import axios from 'axios'
 import Listings from './pages/Listings'
+import ListingDetails from './pages/ListingDetails'
 import PrivateRoute from './components/privateRoute/PrivateRoute'
-
 
 const App = () => {
   // To Navigate on the other page
@@ -79,12 +79,17 @@ const App = () => {
 
         <Route
           path='/about'
-          element={<About/>}
+          element={<About />}
         />
 
         <Route
           path='/contact'
-          element={<Contact/>}
+          element={<Contact />}
+        />
+
+        <Route
+          path='/listing/:id'
+          element={<ListingDetails />}
         />
 
         {/* Protected Route */}

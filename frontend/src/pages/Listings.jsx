@@ -69,14 +69,22 @@ const Listings = ({ setListings }) => {
     // Convert each File to an Object URL before saving
     const imageUrls = validImages.map((file) => URL.createObjectURL(file));
 
-    // setListings 
-    setListings((prev) => [
-      ...prev,
-      {
-        ...formData,
-        images: imageUrls, // store URLs, not File objects
-      },
-    ]);
+    // Create listing with unique ID
+    const newListing = {
+      id: Date.now(),
+      title: formData.title,
+      location: formData.location,
+      price: formData.price,
+      description: formData.description,
+      images: imageUrls
+    };
+
+    // Update state & localStorage
+  setListings((prev) => {
+    const updated = [...prev, newListing];
+    localStorage.setItem("listings", JSON.stringify(updated));
+    return updated;
+  });
 
     alert("Listing Submitted Successfully!");
 
@@ -90,7 +98,7 @@ const Listings = ({ setListings }) => {
     });
     setPreviews([]);
     setCurrentIndex(0);
-    navigate('/')
+    navigate(`/listing/${newListing.id}`);
   };
 
   const prevImage = () => {
@@ -102,8 +110,8 @@ const Listings = ({ setListings }) => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black p-6">
-      <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg shadow-xl rounded-2xl p-8 border border-white/20">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black md:p-6 p-3">
+      <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg shadow-xl rounded-2xl md:p-8 p-3 border border-white/20">
         {/* Heading */}
         <h2 className="text-2xl font-bold text-white mb-6 text-center">
           🏠 List Your Home
@@ -174,29 +182,34 @@ const Listings = ({ setListings }) => {
             </label>
 
             {formData.images.map((_, index) => (
-              <div key={index} className="flex items-center gap-3 mb-3">
+              <div
+                key={index}
+                className="flex flex-wrap sm:flex-nowrap sm:gap-2 mb-3"
+              >
                 <input
                   type="file"
                   accept="image/*"
                   name="image"
                   onChange={(e) => handleChange(e, index)}
                   className="flex-1 text-gray-300 file:mr-4 file:py-2 file:px-4 
-                    file:rounded-lg file:border-0 file:text-sm file:font-semibold
-                    file:bg-blue-500 file:text-white hover:file:bg-blue-600
-                    cursor-pointer"
+                  file:rounded-lg file:border-0 file:text-sm file:font-semibold
+                  file:bg-blue-500 file:text-white hover:file:bg-blue-600
+                  cursor-pointer text-sm sm:text-base"
                 />
-                {/* Logic to Remove Input Field */}
+                {/* logic to remove image */}
                 {formData.images.length > 1 && (
                   <button
                     type="button"
                     onClick={() => removeImageField(index)}
-                    className="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg"
+                    className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg 
+                    w-10 sm:w-auto text-sm sm:text-base"
                   >
                     ✕
                   </button>
                 )}
               </div>
             ))}
+
 
             {/* Logic to Add Image */}
             <button
@@ -247,7 +260,7 @@ const Listings = ({ setListings }) => {
                       src={img}
                       onClick={() => setCurrentIndex(idx)}
                       className={`w-10 h-10 object-cover rounded-lg cursor-pointer border-2 transition 
-              ${currentIndex === idx ? "border-white" : "border-transparent opacity-70 hover:opacity-100"}`}
+                      ${currentIndex === idx ? "border-white" : "border-transparent opacity-70 hover:opacity-100"}`}
                       alt={`Thumbnail ${idx + 1}`}
                     />
                   ))}

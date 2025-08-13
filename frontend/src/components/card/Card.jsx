@@ -1,10 +1,21 @@
 import { useState } from "react";
 import './Card.css'
+import { useNavigate } from "react-router-dom";
 // React Icons
 import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaRupeeSign } from "react-icons/fa";
 
-const Card = ({ title, location, price, description, images }) => {
+const Card = ({ title, location, price, description, images, id, listing }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
+
+  // handleClick
+  const handleClick = () => {
+    if (id) {
+      navigate(`/listing/${id}`);
+    } else {
+      console.error("Card clicked but no ID provided!");
+    }
+  }
 
   // function to Show Previous Image
   const prevImage = () => {
@@ -23,10 +34,11 @@ const Card = ({ title, location, price, description, images }) => {
 
   return (
     <div className="card-container">
-
       {/* .........Upper part of Card......... */}
       {/* Image Carousel */}
-      <div className="relative w-full card-image-container">
+      <div className="relative w-full card-image-container"
+        onClick={handleClick}>
+        {console.log(listing)}
         <img
           src={images[currentIndex]}
           alt={title}
@@ -37,13 +49,19 @@ const Card = ({ title, location, price, description, images }) => {
         {images.length > 1 && (
           <>
             <button
-              onClick={prevImage}
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
               className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white/70 hover:bg-white text-gray-800 p-1 rounded-full shadow-md"
             >
               <FaChevronLeft size={14} />
             </button>
             <button
-              onClick={nextImage}
+              onClick={(e) => {
+                e.stopPropagation(); // prevent navigation
+                nextImage();
+              }}
               className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white/70 hover:bg-white text-gray-800 p-1 rounded-full shadow-md"
             >
               <FaChevronRight size={14} />

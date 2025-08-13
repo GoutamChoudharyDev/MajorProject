@@ -11,7 +11,16 @@ const Section = ({ title, data }) => {
 
       <div className="section-card-wrapper">
         {data.map((item, idx) => (
-          <Card key={idx} {...item} />
+          // <Card key={idx} {...item} />
+          <Card
+            key={item.id || item._id || idx}        // Use unique id as key
+            id={item.id || item._id || idx}         // Pass id explicitly
+            title={item.title}
+            location={item.location}
+            price={item.price}
+            images={item.images}
+            description={item.description}
+          />
         ))}
       </div>
     </div>
