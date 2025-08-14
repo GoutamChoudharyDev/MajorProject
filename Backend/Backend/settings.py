@@ -33,6 +33,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
+
+SITE_ID = 1  # Default site ID for Django sites framework
+
 
 # Application definition
 
@@ -43,17 +47,30 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "accounts",  # Custom app for user accounts
+
     "rest_framework",  # Django REST Framework for API development
     "rest_framework_simplejwt",  # JWT authentication for REST Framework
     "rest_framework_simplejwt.token_blacklist",  # JWT token blacklist for logout
+    "rest_framework.authtoken",  # Token authentication for REST Framework
+
     "corsheaders",  # CORS headers for cross-origin requests
+    
+    "allauth",  # Django Allauth for user registration and authentication
+    "allauth.account",  # Allauth account management
+
+    "dj_rest_auth",  # Django REST Auth for user authentication
+    "dj_rest_auth.registration",  # Registration endpoints for REST Auth
+
+    "property",  # Custom app for property management
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Middleware for handling CORS
+    "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -119,9 +136,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 # Password validation
@@ -159,6 +176,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
+MEDIA_URL =  "media/"  # URL to access media files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -207,3 +226,7 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
 
+REST_AUTH = {
+    "USE_JWT": True,  # Use JWT for authentication
+    "JWT_AUTH_HTTPONLY": False
+}
