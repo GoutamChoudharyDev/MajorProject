@@ -12,6 +12,9 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
 
+# changes...1
+from rest_framework.permissions import AllowAny
+
 def get_tokens_for_user(user):
     if not user.is_active:
       raise AuthenticationFailed("User is not active")
@@ -23,6 +26,10 @@ def get_tokens_for_user(user):
 
 
 class UserRegistrationView(APIView):
+
+    # changes..2
+    permission_classes = [AllowAny]
+
     def post(self, request, format=None):
         # Logic for user registration
         serializer = UserRegistrationSerializer(data=request.data)
@@ -34,6 +41,10 @@ class UserRegistrationView(APIView):
     
 
 class UserLoginView(APIView):
+
+    # changes..3
+    permission_classes = [AllowAny]
+
     def post(self, request, format=None):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -49,7 +60,8 @@ class UserLoginView(APIView):
 
 
 class UserLogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def post(self, request, format=None):
         try:

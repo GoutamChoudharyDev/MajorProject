@@ -35,7 +35,7 @@ const Signup = () => {
 
         // Password and ConfirmPassword cheking
         if (password !== password2) {
-            setError('Confirm password is Wrong!')
+            setError('Passwords do not match!')
             return;
         }
 
@@ -48,20 +48,23 @@ const Signup = () => {
                 password2,
             });
 
-             // Show success message
+            // Show success message
             setSuccess(response.data.message || 'Signup successful!');
 
             // Clear form fields
             setUsername('');
             setEmail('');
             setPassword('');
+            setPassword2('');
 
             // Redirect to login
             navigate('/login');
 
         } catch (error) {
             if (error.response && error.response.data) {
-                setError(error.response.data.error || 'Invalid credentials!');
+                // setError(error.response.data.error || 'Invalid credentials!');
+                const firstError = Object.values(error.response.data)[0];
+                setError(Array.isArray(firstError) ? firstError[0] : firstError);
             } else {
                 setError('Network error');
             }

@@ -8,6 +8,9 @@ const Card = ({ title, location, price, description, images, id, listing }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
+  // Ensure images is always an array
+  const safeImages = Array.isArray(images) ? images : [];
+
   // handleClick
   const handleClick = () => {
     if (id) {
@@ -38,9 +41,12 @@ const Card = ({ title, location, price, description, images, id, listing }) => {
       {/* Image Carousel */}
       <div className="relative w-full card-image-container"
         onClick={handleClick}>
-        {console.log(listing)}
         <img
-          src={images[currentIndex]}
+          src={
+            safeImages[currentIndex]
+              ? `http://127.0.0.1:8000/${safeImages[currentIndex].image}`
+              : '/default-placeholder.jpg'
+          }
           alt={title}
           className="w-full h-full object-cover transition-transform duration-500"
         />
@@ -72,13 +78,13 @@ const Card = ({ title, location, price, description, images, id, listing }) => {
         {/* Image Indicators */}
         {images.length > 1 && (
           <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-            {images.map((_, index) => (
+            {images.map((img, index) => (
               <span
-                key={index}
-                className={`w-2 h-2 rounded-full ${index === currentIndex ? "bg-white" : "bg-gray-400/70"
-                  }`}
+                key={img.id || index}
+                className={`w-2 h-2 rounded-full ${index === currentIndex ? "bg-white" : "bg-gray-400/70"}`}
               ></span>
             ))}
+
           </div>
         )}
       </div>

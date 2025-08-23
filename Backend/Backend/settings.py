@@ -31,7 +31,9 @@ SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+# ...............changes......................
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
 
@@ -177,7 +179,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
-MEDIA_URL =  "media/"  # URL to access media files
+# MEDIA_URL =  "media/"  # URL to access media files
+# ............changes...........................
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -219,7 +223,7 @@ SIMPLE_JWT = {
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:5173",  # vite/React
     "http://localhost:8000",  # Django development server   
 ]
 
