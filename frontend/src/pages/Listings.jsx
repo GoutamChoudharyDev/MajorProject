@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 // React Icons......
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -37,7 +38,6 @@ const Listings = ({ setListings }) => {
 
     if (name === "image") {
       const updatedImages = [...formData.images];
-      // updatedImages[index] = files[0] || null;
       if (files && files[0]) {
         updatedImages[index] = files[0];
       }
@@ -56,49 +56,56 @@ const Listings = ({ setListings }) => {
     setFormData({ ...formData, images: updatedImages });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Logic to Upload atleast 3 Images
+    // Validate at least 3 images
     const validImages = formData.images.filter((img) => img);
     if (validImages.length < 3) {
       alert("Please upload at least 3 images.");
       return;
     }
 
-    // Convert each File to an Object URL before saving
-    const imageUrls = validImages.map((file) => URL.createObjectURL(file));
+    // Prepare FormData for file upload
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("location", formData.location);
+    data.append("price", formData.price);
+    data.append("description", formData.description);
 
-    // Create listing with unique ID
-    const newListing = {
-      id: Date.now(),
-      title: formData.title,
-      location: formData.location,
-      price: formData.price,
-      description: formData.description,
-      images: imageUrls
-    };
-
-    // Update state & localStorage
-  setListings((prev) => {
-    const updated = [...prev, newListing];
-    localStorage.setItem("listings", JSON.stringify(updated));
-    return updated;
-  });
-
-    alert("Listing Submitted Successfully!");
-
-    // Reset form Means set empty all field after submition
-    setFormData({
-      title: "",
-      location: "",
-      price: "",
-      description: "",
-      images: [null],
+    validImages.forEach((file) => {
+      data.append("images", file); // backend should handle multiple images
     });
-    setPreviews([]);
-    setCurrentIndex(0);
-    navigate(`/listing/${newListing.id}`);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/properties/create/", // your backend endpoint
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      alert("Listing Submitted Successfully!");
+      setListings((prev) => [...prev, response.data]); // update state with backend response
+
+      // Reset form
+      setFormData({
+        title: "",
+        location: "",
+        price: "",
+        description: "",
+        images: [null],
+      });
+      setPreviews([]);
+      setCurrentIndex(0);
+      navigate(`/listing/${response.data.id}`);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit listing. Please try again.");
+    }
   };
 
   const prevImage = () => {

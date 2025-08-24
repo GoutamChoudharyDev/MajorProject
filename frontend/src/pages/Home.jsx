@@ -3,15 +3,26 @@ import Housebg from '../assets/houseBg2.jpeg'
 import Section from '../components/cardSection/Section'
 import Footer from '../components/footer/Footer';
 import Navbar from '../components/header/Navbar'
+import axios from 'axios';
 
-const Home = ({ isLoggedIn, handleLogout, listings }) => {
+const Home = ({ isLoggedIn, handleLogout }) => {
   const [allListings, setAllListings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load listings from localStorage if not provided
-    const storedListings = JSON.parse(localStorage.getItem("listings")) || [];
-    setAllListings(storedListings);
-  }, [listings]); // runs when new listing is added
+    const fetchListings = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/properties/");
+        setAllListings(response.data); // store all listings from backend
+      } catch (error) {
+        console.error("Error fetching listings:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchListings();
+  }, []);
 
   return (
     <div>
@@ -38,8 +49,17 @@ const Home = ({ isLoggedIn, handleLogout, listings }) => {
       </div>
 
       {/* Card Section */}
-      <div className="space-y-8 px-6 py-10">
+      {/* <div className="space-y-8 px-6 py-10">
         <Section title="🏠 Popular Homes in Indore" data={allListings} />
+      </div> */}
+
+          {/* Listings Section */}
+      <div className="space-y-8 px-6 py-10">
+        {loading ? (
+          <p className="text-green-600">Loading listings...</p>
+        ) : (
+          <Section title="🏠 Popular Homes in Indore" data={allListings} />
+        )}
       </div>
 
       {/* Footer */}

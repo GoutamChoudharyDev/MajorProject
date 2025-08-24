@@ -31,7 +31,7 @@ const App = () => {
     try {
       const refresh_token = localStorage.getItem('refresh_token');
       const access_token = localStorage.getItem('access_token');
-          
+
 
       // Make sure token exists before sending
       if (!access_token) {
