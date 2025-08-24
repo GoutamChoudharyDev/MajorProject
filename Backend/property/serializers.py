@@ -16,8 +16,5 @@ class PropertyListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Property
-<<<<<<< HEAD
         fields = ['id', 'title', 'location', 'price', 'images_url', 'description']
-=======
-        fields = ['id', 'title', 'location', 'price', 'description', 'images']
->>>>>>> 8c743b3703d45dad9fe66ed217fb9859aeebe03c
+
