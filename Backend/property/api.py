@@ -9,13 +9,13 @@ def properties_list(request):
     """
     GET: Return all properties with images
     """
-<<<<<<< HEAD
-    properties = Property.objects.all()
-    serializer = PropertyListSerializer(properties, many=True)
-    return JsonResponse({
-        'data': serializer.data
-        })
-=======
+# <<<<<<< HEAD
+#     properties = Property.objects.all()
+#     serializer = PropertyListSerializer(properties, many=True)
+#     return JsonResponse({
+#         'data': serializer.data
+#         })
+# =======
     if request.method == "GET":
         properties = Property.objects.all()
         serializer = PropertyListSerializer(properties, many=True)
@@ -48,4 +48,4 @@ def property_create(request):
 
         serializer = PropertyListSerializer(property_instance)
         return JsonResponse(serializer.data, safe=False, status=201)
->>>>>>> 8c743b3703d45dad9fe66ed217fb9859aeebe03c
+# >>>>>>> 8c743b3703d45dad9fe66ed217fb9859aeebe03c
