@@ -37,7 +37,7 @@ const ListingDetails = () => {
     }
 
     return (
-        <div className="max-w-5xl mx-auto p-4 text-white">
+        <div className="max-w-6xl mx-auto p-4 text-white">
             {/* Back Button at Top Left */}
             <button
                 onClick={() => navigate("/")}
@@ -53,21 +53,40 @@ const ListingDetails = () => {
             </div>
             {/* Images */}
             {listing.images && listing.images.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    {listing.images.map((imgObj, index) => (
+                <div
+                    className="grid gap-4 mb-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2"
+                >
+                    {/* First Image */}
+                    <img
+                        src={listing.images[0]?.image ? `http://127.0.0.1:8000/${listing.images[0].image}` : "default-placeholder.jpg"}
+                        alt="Main"
+                        className="w-full h-50 object-cover rounded-lg md:col-span-2 md:row-span-2 md:h-full"
+                    />
+
+                    {/* Second Image */}
+                    {listing.images[1] && (
                         <img
-                            key={index}
-                            src={imgObj.image ? `http://127.0.0.1:8000/${imgObj.image}` : "default-placeholder.jpg"}
-                            alt={`Listing ${index + 1}`}
-                            className="w-full h-64 object-cover rounded-lg"
+                            src={listing.images[1]?.image ? `http://127.0.0.1:8000/${listing.images[1].image}` : "default-placeholder.jpg"}
+                            alt="Second"
+                            className="w-full h-50 object-cover rounded-lg"
                         />
-                    ))}
+                    )}
+
+                    {/* Third Image */}
+                    {listing.images[2] && (
+                        <img
+                            src={listing.images[2]?.image ? `http://127.0.0.1:8000/${listing.images[2].image}` : "default-placeholder.jpg"}
+                            alt="Third"
+                            className="w-full h-50 object-cover rounded-lg"
+                        />
+                    )}
                 </div>
             ) : (
                 <div className="w-full h-64 bg-gray-700 flex items-center justify-center text-white mb-6 rounded-lg">
                     No Images Available
                 </div>
             )}
+
 
             {/* Description */}
             <p className="text-lg text-gray-600">{listing.description || "No description provided."}</p>

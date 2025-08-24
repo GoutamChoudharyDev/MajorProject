@@ -4,41 +4,43 @@
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   transition: 0.3s ease;
-  min-width: 260px;
+  min-width: 240px;  /* Small and fixed */
+  max-width: 260px;  /* Optional: to stop it from growing too large */
 }
 
 .card-container:hover {
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* Image height responsive */
+/* Keep image height smaller */
 .card-image-container {
   height: 160px;
 }
 
+/* Remove bigger scaling in media queries */
 @media (min-width: 640px) {
   .card-container {
-    min-width: 300px;
+    min-width: 240px;
   }
   .card-image-container {
-    height: 200px;
+    height: 160px;
   }
 }
 
 @media (min-width: 768px) {
   .card-container {
-    min-width: 320px;
+    min-width: 240px;
   }
   .card-image-container {
-    height: 220px;
+    height: 160px;
   }
 }
 
 @media (min-width: 1024px) {
   .card-container {
-    min-width: 350px;
+    min-width: 240px;
   }
   .card-image-container {
-    height: 240px;
+    height: 160px;
   }
 }

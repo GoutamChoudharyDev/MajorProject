@@ -1,26 +1,23 @@
 .section-card-wrapper {
   display: flex;
   gap: 1rem;
-  overflow-x: auto;
+  overflow-x: auto;   /* always allow horizontal scroll */
   scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+
+  /* ✅ Hide scrollbar but keep scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
 }
 
-@media (min-width: 640px) {
-  .section-card-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-  }
+.section-card-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 
-@media (min-width: 768px) {
-  .section-card-wrapper {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
+/* On large screens: show exactly 5 cards per "view" */
 @media (min-width: 1024px) {
-  .section-card-wrapper {
-    grid-template-columns: repeat(4, 1fr);
+  .section-card-wrapper > * {
+    flex: 0 0 calc(20% - 1rem); /* 5 cards visible */
+    max-width: calc(20% - 1rem);
   }
 }

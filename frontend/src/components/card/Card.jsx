@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 // React Icons
 import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaRupeeSign } from "react-icons/fa";
 
-const Card = ({ title, location, price, description, images, id, listing }) => {
+const Card = ({ id, title, location, price, images}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ const Card = ({ title, location, price, description, images, id, listing }) => {
               : '/default-placeholder.jpg'
           }
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500"
+          className="w-full h-full cursor-pointer object-cover transition-transform duration-500"
         />
 
         {/* Navigation Buttons */}
@@ -92,7 +92,7 @@ const Card = ({ title, location, price, description, images, id, listing }) => {
       {/* .........Lower part of Card......... */}
       {/* Card Details */}
       <div className="p-4">
-        <h3 className="font-semibold text-lg truncate">{title}</h3>
+        <h3 className="font-semibold text-gray-800 text-lg truncate">{title}</h3>
         <div className="flex items-center text-gray-600 text-sm">
           <FaMapMarkerAlt className="mr-1 text-red-500" />
           <span className="truncate">{location}</span>
@@ -100,7 +100,7 @@ const Card = ({ title, location, price, description, images, id, listing }) => {
         <p className="text-blue-600 font-bold mt-1 flex items-center">
           <FaRupeeSign className="mr-0.5" /> {price}
         </p>
-        <p className="text-gray-500 text-sm mt-2 line-clamp-3">{description}</p>
+        {/* <p className="text-gray-500 text-sm mt-2 line-clamp-3">{description}</p> */}
       </div>
     </div>
   );

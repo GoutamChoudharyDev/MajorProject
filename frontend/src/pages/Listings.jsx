@@ -48,6 +48,9 @@ const Listings = ({ setListings }) => {
   };
 
   const addImageField = () => {
+    if (formData.images.length >= 3) {
+      alert("You can upload maximum 3 images");
+    }
     setFormData({ ...formData, images: [...formData.images, null] });
   };
 
@@ -64,6 +67,11 @@ const Listings = ({ setListings }) => {
     if (validImages.length < 3) {
       alert("Please upload at least 3 images.");
       return;
+    }
+
+    if (validImages.length > 3) {
+      alert("You can add only 3 images");
+      return
     }
 
     // Prepare FormData for file upload
@@ -219,13 +227,15 @@ const Listings = ({ setListings }) => {
 
 
             {/* Logic to Add Image */}
-            <button
-              type="button"
-              onClick={addImageField}
-              className="mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
-            >
-              + Add More Images
-            </button>
+            {formData.images.length < 3 && (
+              <button
+                type="button"
+                onClick={addImageField}
+                className="mt-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
+              >
+                + Add More Images
+              </button>
+            )}
           </div>
 
           {/* Slideshow Preview */}
