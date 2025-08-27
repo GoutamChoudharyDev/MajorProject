@@ -14,6 +14,8 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
+# changes........
+import dj_database_url
 
 # Load environment variables from .env file
 load_dotenv()
@@ -61,7 +63,7 @@ INSTALLED_APPS = [
     
     "allauth",  # Django Allauth for user registration and authentication
     "allauth.account",  # Allauth account management
-
+    "allauth.socialaccount", # changes..........
     "dj_rest_auth",  # Django REST Auth for user authentication
     "dj_rest_auth.registration",  # Registration endpoints for REST Auth
 
@@ -117,12 +119,35 @@ DATABASES = {
         # 'PASSWORD': os.getenv('DB_PASSWORD', ''),
         # 'HOST': os.getenv('DB_HOST', 'localhost'),
         # 'PORT': os.getenv('DB_PORT', '5432'),
+
+        # # old code ..............
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'major_project_db',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'admin12',
+        # 'HOST': 'localhost',
+        # 'PORT': '5432',
+
+        # changes...................
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'major_project_db',
-        'USER': 'postgres',
-        'PASSWORD': 'admin12',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv("LOCAL_DB_NAME"),
+        'USER': os.getenv("LOCAL_DB_USER"),
+        'PASSWORD': os.getenv("LOCAL_DB_PASSWORD"),
+        'HOST': os.getenv("LOCAL_DB_HOST"),
+        'PORT': os.getenv("LOCAL_DB_PORT"),
+    },
+
+    # ...........Adding the supabase Database.............
+    'supabase': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("SUPABASE_DB_NAME"),
+        'USER': os.getenv("SUPABASE_DB_USER"),
+        'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
+        'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
+        'PORT': os.getenv("SUPABASE_DB_PORT"),
+        'OPTIONS': {
+            'sslmode': 'require',   # ✅ Supabase requires SSL
+        },
     }
 }
 # else:
