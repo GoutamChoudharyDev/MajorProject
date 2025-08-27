@@ -48,4 +48,3 @@ def property_create(request):
 
         serializer = PropertyListSerializer(property_instance)
         return JsonResponse(serializer.data, safe=False, status=201)
-# >>>>>>> 8c743b3703d45dad9fe66ed217fb9859aeebe03c

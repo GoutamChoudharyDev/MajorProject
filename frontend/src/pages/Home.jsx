@@ -48,17 +48,12 @@ const Home = ({ isLoggedIn, handleLogout }) => {
         </div>
       </div>
 
-      {/* Card Section */}
-      {/* <div className="space-y-8 px-6 py-10">
-        <Section title="🏠 Popular Homes in Indore" data={allListings} />
-      </div> */}
-
-          {/* Listings Section */}
+      {/* Listings Section */}
       <div className="space-y-8 px-6 py-10">
         {loading ? (
           <p className="text-green-600">Loading listings...</p>
         ) : (
-          <Section title="🏠 Popular Homes in Indore" data={allListings} />
+          <Section title="🏠 Popular Homes" data={allListings} />
         )}
       </div>
 

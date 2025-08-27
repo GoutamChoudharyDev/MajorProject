@@ -6,7 +6,6 @@ class PropertyImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)  # ensures full URL
     # image = serializers.ImageField(use_url=True, many=True)  # ensures full URL
 
-    
     class Meta:
         model = PropertyImage
         fields = ['id', 'image']
@@ -16,5 +15,10 @@ class PropertyListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Property
-        fields = ['id', 'title', 'location', 'price', 'images', 'description']
+        fields = ['id', 'title', 'location', 'price', 'description', 'images']
+
+# class PropertySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Property
+#         fields = '__all__'
 

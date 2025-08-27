@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 class Property(models.Model):
@@ -7,6 +8,7 @@ class Property(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # <- automatically sets current timestamp
+    # owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='properties')
 
     def __str__(self):
         return self.title

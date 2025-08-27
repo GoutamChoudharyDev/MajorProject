@@ -1,8 +1,11 @@
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Property, PropertyImage
-from .serializers import PropertySerializer
+from .serializers import PropertySerializer, PropertyListSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 
 class PropertyCreateView(APIView):
     def post(self, request):
@@ -27,3 +30,11 @@ class PropertyCreateView(APIView):
 
         serializer = PropertyListSerializer(property_instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# class PropertyViewSet(viewsets.ModelViewSet):
+#     queryset = Property.objects.all()
+#     serializer_class = PropertySerializer
+#     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
