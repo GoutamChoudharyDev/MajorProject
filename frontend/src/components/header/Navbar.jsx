@@ -72,6 +72,7 @@ const Navbar = ({ isLoggedIn, handleLogout, onSearch }) => {
                 <div className="hidden md:flex space-x-6 items-center text-white font-medium">
                     <Link to="/" className="hover:text-yellow-400 transition">Home</Link>
                     <Link to="/listings" className="hover:text-yellow-400 transition">Listing</Link>
+                    <Link to="/mylistings" className="hover:text-yellow-400 transition">My Listing</Link>
                     <Link to="/about" className="hover:text-yellow-400 transition">About</Link>
                     <Link to="/contact" className="hover:text-yellow-400 transition">Contact</Link>
 
@@ -106,6 +107,7 @@ const Navbar = ({ isLoggedIn, handleLogout, onSearch }) => {
                 <div className="md:hidden flex flex-col space-y-3 mt-4 text-white font-medium">
                     <Link to="/" className="hover:text-blue-400 transition">Home</Link>
                     <Link to="/listings" className="hover:text-blue-400 transition">Listing</Link>
+                    <Link to="/mylistings" className="hover:text-yellow-400 transition">My Listing</Link>
                     <Link to="/about" className="hover:text-blue-400 transition">About</Link>
                     <Link to="/contact" className="hover:text-blue-400 transition">Contact</Link>
 

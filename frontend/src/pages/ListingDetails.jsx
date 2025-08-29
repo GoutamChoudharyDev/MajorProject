@@ -5,8 +5,10 @@ import { FaArrowLeft } from "react-icons/fa";
 import { FaMapMarkerAlt, FaRupeeSign } from "react-icons/fa";
 
 const ListingDetails = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+    const { id } = useParams(); // To generate id
+    const navigate = useNavigate(); //To redirect another page
+
+    // .......usestates.......
     const [listing, setListing] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -87,7 +89,6 @@ const ListingDetails = () => {
                 </div>
             )}
 
-
             {/* Description */}
             <p className="text-lg text-gray-600">{listing.description || "No description provided."}</p>
 
@@ -95,6 +96,14 @@ const ListingDetails = () => {
             <p className="text-blue-600 font-bold mt-1 flex items-center">
                 <FaRupeeSign className="mr-0.5" /> {listing.price}
             </p>
+
+            {/* Book Now Button */}
+            <button
+                onClick={() => navigate(`/booking/${listing.id}`)}
+                className="w-40 py-3 mt-1 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold shadow-lg transition-all duration-200"
+            >
+                Book Now
+            </button>
         </div>
     );
 }

@@ -128,7 +128,7 @@ const Listings = ({ setListings }) => {
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black md:p-6 p-3">
       <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg shadow-xl rounded-2xl md:p-8 p-3 border border-white/20">
         {/* Heading */}
-        <h2 className="text-2xl font-bold text-white mb-6 text-center">
+        <h2 className="text-2xl font-bold text-white mb-3 mt-2 text-center">
           🏠 List Your Home
         </h2>
 
@@ -136,13 +136,13 @@ const Listings = ({ setListings }) => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Title */}
           <div>
-            <label className="block text-white font-medium mb-1">Title</label>
+            <label className="block  text-white font-medium mb-1">Title</label>
             <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 px-4 py-2 rounded-lg bg-transparent text-white placeholder-gray-300 outline-none focus-within:ring-2 focus-within:ring-blue-500"
               placeholder="Cozy 2BHK in Indore"
               required
             />
@@ -156,7 +156,7 @@ const Listings = ({ setListings }) => {
               name="location"
               value={formData.location}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 px-4 py-2 rounded-lg bg-transparent text-white placeholder-gray-300 outline-none focus-within:ring-2 focus-within:ring-blue-500"
               placeholder="Indore, MP"
               required
             />
@@ -170,7 +170,7 @@ const Listings = ({ setListings }) => {
               name="price"
               value={formData.price}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 px-4 py-2 rounded-lg bg-transparent text-white placeholder-gray-300 outline-none focus-within:ring-2 focus-within:ring-blue-500"
               placeholder="15000"
               required
             />
@@ -184,7 +184,7 @@ const Listings = ({ setListings }) => {
               value={formData.description}
               onChange={handleChange}
               rows="3"
-              className="w-full px-4 py-2 rounded-lg bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 px-4 py-2 rounded-lg bg-transparent text-white placeholder-gray-300 outline-none focus-within:ring-2 focus-within:ring-blue-500"
               placeholder="Spacious, well-lit, near market..."
               required
             ></textarea>

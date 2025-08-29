@@ -9,7 +9,8 @@ import axios from 'axios'
 import Listings from './pages/Listings'
 import ListingDetails from './pages/ListingDetails'
 import PrivateRoute from './components/privateRoute/PrivateRoute'
-import MyListing from './pages/MyListing'
+import MyListings from './pages/MyListings'
+import BookingPage from './pages/BookingPage'
 
 const App = () => {
   // To Navigate on the other page
@@ -32,7 +33,6 @@ const App = () => {
     try {
       const refresh_token = localStorage.getItem('refresh_token');
       const access_token = localStorage.getItem('access_token');
-
 
       // Make sure token exists before sending
       if (!access_token) {
@@ -94,17 +94,30 @@ const App = () => {
           element={<ListingDetails />}
         />
 
-        <Route
-          path='/mylisting'
-          element={<MyListing />}
-        />
-
         {/* Protected Route */}
         <Route
           path='/listings'
           element={
             <PrivateRoute isAuthenticated={isLoggedIn}>
               <Listings setListings={setListings} />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/booking/:id'
+          element={
+            <PrivateRoute isAuthenticated={isLoggedIn}>
+              <BookingPage  />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/mylistings'
+          element={
+            <PrivateRoute isAuthenticated={isLoggedIn}>
+              <MyListings />
             </PrivateRoute>
           }
         />
