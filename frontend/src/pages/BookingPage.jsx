@@ -1,29 +1,52 @@
 import axios from "axios";
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaCalendarAlt, FaUsers, FaPhone } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
-const BookingPage = ({ propertyId }) => {
+const BookingPage = () => {
+    const { id } = useParams();
+
     const [bookingData, setBookingData] = useState({
+        property: id,
         name: "",
         email: "",
         phone: "",
-        checkIn: "",
-        checkOut: "",
+        check_in: "",
+        check_out: "",
         guests: 1
     });
+
     const [bookingSuccess, setBookingSuccess] = useState(false);
     const [bookingError, setBookingError] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`http://127.0.0.1:8000/api/bookings/`, {
-                property: propertyId,
-                ...bookingData
-            });
+            const token = localStorage.getItem("access_token");
+
+            await axios.post(
+                "http://127.0.0.1:8000/api/properties/bookings/",
+                { ...bookingData, property: id },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // <--- This is required
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
             setBookingSuccess(true);
             setBookingError("");
-            setBookingData({ name: "", email: "", checkIn: "", checkOut: "", guests: 1 });
+
+            // ✅ Reset with correct snake_case keys
+            setBookingData({
+                property: id,
+                name: "",
+                email: "",
+                phone: "",
+                check_in: "",
+                check_out: "",
+                guests: 1
+            });
         } catch (error) {
             console.error("Booking failed:", error);
             setBookingError("Booking failed. Please try again.");
@@ -84,8 +107,8 @@ const BookingPage = ({ propertyId }) => {
                         <FaCalendarAlt className="text-gray-400 mr-3" />
                         <input
                             type="date"
-                            value={bookingData.checkIn}
-                            onChange={(e) => setBookingData({ ...bookingData, checkIn: e.target.value })}
+                            value={bookingData.check_in}
+                            onChange={(e) => setBookingData({ ...bookingData, check_in: e.target.value })}
                             className="bg-transparent outline-none w-full text-white placeholder-gray-300"
                             required
                         />
@@ -96,8 +119,8 @@ const BookingPage = ({ propertyId }) => {
                         <FaCalendarAlt className="text-gray-400 mr-3" />
                         <input
                             type="date"
-                            value={bookingData.checkOut}
-                            onChange={(e) => setBookingData({ ...bookingData, checkOut: e.target.value })}
+                            value={bookingData.check_out}
+                            onChange={(e) => setBookingData({ ...bookingData, check_out: e.target.value })}
                             className="bg-transparent outline-none w-full text-white placeholder-gray-300"
                             required
                         />
@@ -111,7 +134,7 @@ const BookingPage = ({ propertyId }) => {
                             min={1}
                             placeholder="Guests"
                             value={bookingData.guests}
-                            onChange={(e) => setBookingData({ ...bookingData, guests: e.target.value })}
+                            onChange={(e) => setBookingData({ ...bookingData, guests: Number(e.target.value) })}
                             className="bg-transparent outline-none w-full text-white placeholder-gray-300"
                             required
                         />

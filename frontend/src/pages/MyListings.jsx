@@ -11,35 +11,59 @@ const MyListings = () => {
   useEffect(() => {
     const fetchMyListings = async () => {
       try {
-        const token = localStorage.getItem("access_token"); // use same key as login
-        if (!token) return;
+        const token = localStorage.getItem("access_token");
+        console.log(token)
+
+        if (!token) {
+          alert("Please login first!");
+          navigate("/login"); // redirect to login if no token
+          return;
+        }
 
         const response = await axios.get(
           "http://127.0.0.1:8000/api/properties/mylistings/",
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
         );
+
         setMyListings(response.data);
       } catch (error) {
         console.error("Error fetching user listings:", error.response?.data || error);
+
+        if (error.response?.status === 401) {
+          alert("Session expired! Please login again.");
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          navigate("/login");
+        }
       } finally {
         setLoading(false);
       }
     };
+
     fetchMyListings();
-  }, []);
+  }, [navigate]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this listing?")) return;
 
     try {
       const token = localStorage.getItem("access_token");
-      if (!token) return;
+
+      if (!token) {
+        alert("Unauthorized! Please login again.");
+        navigate("/login");
+        return;
+      }
 
       await axios.delete(
         `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
 
       setMyListings((prev) => prev.filter((listing) => listing.id !== id));
@@ -76,7 +100,9 @@ const MyListings = () => {
             )}
 
             <div className="p-4">
-              <h2 className="text-xl font-semibold text-white">{listing.title}</h2>
+              <h2 className="text-xl font-semibold text-white">
+                {listing.title}
+              </h2>
               <p className="text-gray-300 flex items-center text-sm">
                 <FaMapMarkerAlt className="mr-1 text-red-500" />
                 {listing.location}

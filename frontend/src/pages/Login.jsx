@@ -37,13 +37,15 @@ const Login = ({ setIsLoggedIn }) => {
             });
 
             // console.log("Login response:", response.data); // Add this line
-            
-            if (response.status === 200) {
-                const { access, refresh } = response.data;
 
-                // save token to localStorage
-                localStorage.setItem('access_token', access);
-                localStorage.setItem('refresh_token', refresh);
+            if (response.status === 200) {
+                // const { access, refresh } = response.data;
+
+                const { token } = response.data;
+
+                // save token to local storage
+                localStorage.setItem("access_token", token.access);
+                localStorage.setItem("refresh_token", token.refresh);
 
                 // Update login state
                 setIsLoggedIn(true);

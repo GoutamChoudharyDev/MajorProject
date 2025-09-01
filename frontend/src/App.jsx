@@ -108,7 +108,7 @@ const App = () => {
           path='/booking/:id'
           element={
             <PrivateRoute isAuthenticated={isLoggedIn}>
-              <BookingPage  />
+              <BookingPage/>
             </PrivateRoute>
           }
         />

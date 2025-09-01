@@ -42,6 +42,24 @@ WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
 SITE_ID = 1  # Default site ID for Django sites framework
 
 
+# ...................................................
+# ================================
+# Email Configuration
+# ================================
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")  # default to Gmail
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")          # your email, e.g., your_email@gmail.com
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # your app password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# Optional: admin email to receive notifications
+ADMIN_EMAIL = "rc.goutam.choudhary@gmail.com"
+# .............................................................
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -113,32 +131,6 @@ WSGI_APPLICATION = "Backend.wsgi.application"
     # PostgreSQL configuration for collaboration
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': os.getenv('DB_NAME', 'major_project_db'),
-        # 'USER': os.getenv('DB_USER', 'postgres'),
-        # 'PASSWORD': os.getenv('DB_PASSWORD', ''),
-        # 'HOST': os.getenv('DB_HOST', 'localhost'),
-        # 'PORT': os.getenv('DB_PORT', '5432'),
-
-        # # old code ..............
-        # 'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'major_project_db',
-        # 'USER': 'postgres',
-        # 'PASSWORD': 'admin12',
-        # 'HOST': 'localhost',
-        # 'PORT': '5432',
-
-        # changes...................
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("LOCAL_DB_NAME"),
-        'USER': os.getenv("LOCAL_DB_USER"),
-        'PASSWORD': os.getenv("LOCAL_DB_PASSWORD"),
-        'HOST': os.getenv("LOCAL_DB_HOST"),
-        'PORT': os.getenv("LOCAL_DB_PORT"),
-    },
-
-    # ...........Adding the supabase Database.............
-    'supabase': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv("SUPABASE_DB_NAME"),
         'USER': os.getenv("SUPABASE_DB_USER"),
@@ -148,16 +140,17 @@ DATABASES = {
         'OPTIONS': {
             'sslmode': 'require',   # ✅ Supabase requires SSL
         },
+    },
+
+    'psql' : {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("LOCAL_DB_NAME"),
+        'USER': os.getenv("LOCAL_DB_USER"),
+        'PASSWORD': os.getenv("LOCAL_DB_PASSWORD"),
+        'HOST': os.getenv("LOCAL_DB_HOST"),
+        'PORT': os.getenv("LOCAL_DB_PORT"),
     }
 }
-# else:
-#     # SQLite configuration for local development
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": BASE_DIR / "db.sqlite3",
-#         }
-#     }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -203,10 +196,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
-# MEDIA_URL =  "media/"  # URL to access media files
-# ............changes...........................
 MEDIA_URL = "/media/"
+# changes.....
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -218,8 +212,8 @@ AUTH_USER_MODEL = 'accounts.User'  # Custom user model
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
@@ -245,7 +239,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
-
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # vite/React

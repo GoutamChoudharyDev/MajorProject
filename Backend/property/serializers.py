@@ -1,19 +1,31 @@
 from rest_framework import serializers
-from .models import Property, PropertyImage
+from .models import Property, PropertyImage, Booking
 
-
+# -------------------- PropertyImageSerializer --------------------
 class PropertyImageSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(use_url=True)  # ensures full URL
-    # image = serializers.ImageField(use_url=True, many=True)  # ensures full URL
+    image = serializers.SerializerMethodField()
 
-    
     class Meta:
         model = PropertyImage
         fields = ['id', 'image']
 
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if request:
+            return request.build_absolute_uri(obj.image.url)
+        return obj.image.url
+
+# -------------------- PropertyListSerializer --------------------
 class PropertyListSerializer(serializers.ModelSerializer):
     images = PropertyImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Property
         fields = ['id', 'title', 'location', 'price', 'description', 'images']
+
+# -------------------- BookingSerializer --------------------
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+

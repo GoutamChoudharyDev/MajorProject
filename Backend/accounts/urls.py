@@ -1,5 +1,3 @@
-
-
 from django.urls import path
 from django.urls import include
 from accounts.views import UserRegistrationView, UserLoginView, UserLogoutView
