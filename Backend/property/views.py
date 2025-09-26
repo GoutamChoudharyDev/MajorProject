@@ -1,23 +1,26 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Property, PropertyImage
-from .serializers import PropertyListSerializer
-from .serializers import BookingSerializer
+from rest_framework.permissions import IsAuthenticated
 from django.core.mail import send_mail
 from django.conf import settings
-from rest_framework.permissions import IsAuthenticated
+
+from .models import Property, PropertyImage
+from .serializers import PropertyListSerializer, BookingSerializer
+
 
 # -------------------- List all properties --------------------
 class PropertiesListView(APIView):
     permission_classes = []
     """List all properties (for homepage or browse page)"""
+
     def get(self, request):
         properties = Property.objects.all().order_by("-created_at")
-        serializer = PropertyListSerializer(properties, many=True)
+        serializer = PropertyListSerializer(properties, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-# -------------------- create properties --------------------
+
+# -------------------- Create properties --------------------
 class PropertyCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -29,22 +32,28 @@ class PropertyCreateView(APIView):
         images = request.FILES.getlist("images")
 
         if len(images) < 3:
-            return Response({"error": "Please upload at least 3 images."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"error": "Please upload at least 3 images."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
+        # Create property
         property_instance = Property.objects.create(
-            # changes add owner
             owner=request.user,
             title=title,
             location=location,
             price=price,
-            description=description
+            description=description,
         )
 
+        # Attach images
         for img in images:
             PropertyImage.objects.create(property=property_instance, image=img)
 
-        serializer = PropertyListSerializer(property_instance)
+        # Serialize the single property
+        serializer = PropertyListSerializer(property_instance, context={"request": request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 # -------------------- Booking properties --------------------
 class BookingCreateView(APIView):
@@ -54,16 +63,17 @@ class BookingCreateView(APIView):
         serializer = BookingSerializer(data=request.data)
         if serializer.is_valid():
             booking = serializer.save()  # Save booking in DB
-
             property_obj = booking.property
-            owner_email = property_obj.owner.email  # Get owner email
+            owner_email = property_obj.owner.email
 
             # Email to User
             send_mail(
                 subject="Booking Confirmation",
-                message=f"Hello {booking.name},\n\nYour booking for '{property_obj.title}' "
-                        f"from {booking.check_in} to {booking.check_out} for {booking.guests} guests "
-                        f"has been confirmed.\n\nThank you!",
+                message=(
+                    f"Hello {booking.name},\n\nYour booking for '{property_obj.title}' "
+                    f"from {booking.check_in} to {booking.check_out} for {booking.guests} guests "
+                    f"has been confirmed.\n\nThank you!"
+                ),
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[booking.email],
                 fail_silently=False,
@@ -72,9 +82,11 @@ class BookingCreateView(APIView):
             # Email to Owner
             send_mail(
                 subject="Your Property Has Been Booked",
-                message=f"Hello {property_obj.owner.username},\n\nYour property '{property_obj.title}' "
-                        f"has been booked by {booking.name} ({booking.email}, {booking.phone}) "
-                        f"from {booking.check_in} to {booking.check_out} for {booking.guests} guests.",
+                message=(
+                    f"Hello {property_obj.owner.username},\n\nYour property '{property_obj.title}' "
+                    f"has been booked by {booking.name} ({booking.email}, {booking.phone}) "
+                    f"from {booking.check_in} to {booking.check_out} for {booking.guests} guests."
+                ),
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[owner_email],
                 fail_silently=False,
@@ -84,17 +96,19 @@ class BookingCreateView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# -------------------- Mylisting --------------------
+
+# -------------------- My Listings --------------------
 class MyListingsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """Fetch properties owned by the logged-in user"""
         properties = Property.objects.filter(owner=request.user).order_by("-created_at")
-        serializer = PropertyListSerializer(properties, many=True)
+        serializer = PropertyListSerializer(properties, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-# -------------------- Mylisting Details --------------------
+
+# -------------------- My Listing Details --------------------
 class MyListingDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -110,6 +124,6 @@ class MyListingDetailView(APIView):
 
         property_instance.delete()
         return Response(
-            {"message": "Property deleted successfully ✅"},
+            {"message": "Property deleted successfully "},
             status=status.HTTP_204_NO_CONTENT,
         )

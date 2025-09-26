@@ -14,6 +14,7 @@ class PropertiesListView(APIView):
         serializer = PropertyListSerializer(properties, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 # ------------------ Property Create ------------------
 class PropertyCreateView(APIView):
     permission_classes = [IsAuthenticated]
@@ -39,8 +40,9 @@ class PropertyCreateView(APIView):
         for img in images:
             PropertyImage.objects.create(property=property_instance, image=img)
 
-        serializer = PropertyListSerializer(property_instance)
+        serializer = PropertyListSerializer(property_instance, context={'request': request})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 # ------------------ Booking Create ------------------
 class BookingCreateView(APIView):
@@ -78,14 +80,16 @@ class BookingCreateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ------------------ My Listings ------------------
 class MyListingsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         properties = Property.objects.filter(owner=request.user).order_by("-created_at")
-        serializer = PropertyListSerializer(properties, many=True)
+        serializer = PropertyListSerializer(properties, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 # ------------------ My Listing Detail (Delete) ------------------
 class MyListingDetailView(APIView):

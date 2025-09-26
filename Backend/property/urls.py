@@ -2,6 +2,7 @@ from django.urls import path
 from . import views 
 
 urlpatterns = [
+    # Properties
     path('', views.PropertiesListView.as_view(), name='api_properties-list'),
     path('create/', views.PropertyCreateView.as_view(), name='property-create'),
 

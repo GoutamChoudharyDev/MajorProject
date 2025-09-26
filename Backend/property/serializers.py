@@ -10,10 +10,8 @@ class PropertyImageSerializer(serializers.ModelSerializer):
         fields = ['id', 'image']
 
     def get_image(self, obj):
-        request = self.context.get('request')
-        if request:
-            return request.build_absolute_uri(obj.image.url)
-        return obj.image.url
+        return obj.image.url 
+
 
 # -------------------- PropertyListSerializer --------------------
 class PropertyListSerializer(serializers.ModelSerializer):
@@ -22,6 +20,7 @@ class PropertyListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Property
         fields = ['id', 'title', 'location', 'price', 'description', 'images']
+
 
 # -------------------- BookingSerializer --------------------
 class BookingSerializer(serializers.ModelSerializer):
