@@ -141,15 +141,6 @@ DATABASES = {
             'sslmode': 'require',   # ✅ Supabase requires SSL
         },
     },
-
-    'psql' : {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("LOCAL_DB_NAME"),
-        'USER': os.getenv("LOCAL_DB_USER"),
-        'PASSWORD': os.getenv("LOCAL_DB_PASSWORD"),
-        'HOST': os.getenv("LOCAL_DB_HOST"),
-        'PORT': os.getenv("LOCAL_DB_PORT"),
-    }
 }
 
 REST_FRAMEWORK = {
