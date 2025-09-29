@@ -67,10 +67,10 @@ const MyListings = () => {
       );
 
       setMyListings((prev) => prev.filter((listing) => listing.id !== id));
-      alert("Listing deleted successfully ✅");
+      alert("Listing deleted successfully");
     } catch (error) {
       console.error("Error deleting listing:", error.response?.data || error);
-      alert("Failed to delete listing ❌");
+      alert("Failed to delete listing");
     }
   };
 

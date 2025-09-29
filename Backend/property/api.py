@@ -89,17 +89,63 @@ class MyListingsView(APIView):
         properties = Property.objects.filter(owner=request.user).order_by("-created_at")
         serializer = PropertyListSerializer(properties, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+        
 
-
-# ------------------ My Listing Detail (Delete) ------------------
+# -------------------- My Listing Details (Edit & Delete) --------------------
 class MyListingDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def delete(self, request, pk):
+    def get_object(self, pk, user):
         try:
-            property_instance = Property.objects.get(id=pk, owner=request.user)
+            return Property.objects.get(id=pk, owner=user)
         except Property.DoesNotExist:
-            return Response({"error": "Property not found or not owned by you"}, status=status.HTTP_404_NOT_FOUND)
+            return None
 
+    def delete(self, request, pk):
+        property_instance = self.get_object(pk, request.user)
+        if not property_instance:
+            return Response(
+                {"error": "Property not found or not owned by you"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
         property_instance.delete()
-        return Response({"message": "Property deleted successfully ✅"}, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"message": "Property deleted successfully ✅"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
+
+    def put(self, request, pk):
+        """
+        Edit/Update a property.
+        Full update (replace all fields).
+        """
+        property_instance = self.get_object(pk, request.user)
+        if not property_instance:
+            return Response(
+                {"error": "Property not found or not owned by you"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Get updated data from request
+        title = request.data.get("title", property_instance.title)
+        location = request.data.get("location", property_instance.location)
+        price = request.data.get("price", property_instance.price)
+        description = request.data.get("description", property_instance.description)
+        images = request.FILES.getlist("images")
+
+        # Update fields
+        property_instance.title = title
+        property_instance.location = location
+        property_instance.price = price
+        property_instance.description = description
+        property_instance.save()
+
+        # If new images are provided, replace old ones
+        if images:
+            # Delete old images
+            property_instance.images.all().delete()
+            for img in images:
+                PropertyImage.objects.create(property=property_instance, image=img)
+
+        serializer = PropertyListSerializer(property_instance, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)

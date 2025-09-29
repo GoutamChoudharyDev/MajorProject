@@ -7,7 +7,7 @@ from django.conf import settings
 
 from .models import Property, PropertyImage
 from .serializers import PropertyListSerializer, BookingSerializer
-
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # -------------------- List all properties --------------------
 class PropertiesListView(APIView):
@@ -111,6 +111,7 @@ class MyListingsView(APIView):
 # -------------------- My Listing Details --------------------
 class MyListingDetailView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]  # To handle file uploads
 
     def delete(self, request, pk):
         """Delete property if owned by the logged-in user"""
@@ -124,6 +125,31 @@ class MyListingDetailView(APIView):
 
         property_instance.delete()
         return Response(
-            {"message": "Property deleted successfully "},
+            {"message": "Property deleted successfully"},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+    def put(self, request, pk):
+        """Update property if owned by the logged-in user"""
+        try:
+            property_instance = Property.objects.get(id=pk, owner=request.user)
+        except Property.DoesNotExist:
+            return Response(
+                {"error": "Property not found or not owned by you"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Update basic fields
+        property_instance.title = request.data.get("title", property_instance.title)
+        property_instance.location = request.data.get("location", property_instance.location)
+        property_instance.price = request.data.get("price", property_instance.price)
+        property_instance.description = request.data.get("description", property_instance.description)
+        property_instance.save()
+
+        # Handle new images if provided
+        images = request.FILES.getlist("images")
+        for img in images:
+            PropertyImage.objects.create(property=property_instance, image=img)
+
+        serializer = PropertyListSerializer(property_instance, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)

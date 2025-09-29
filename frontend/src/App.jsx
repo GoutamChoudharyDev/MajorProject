@@ -11,6 +11,7 @@ import ListingDetails from './pages/ListingDetails'
 import PrivateRoute from './components/privateRoute/PrivateRoute'
 import MyListings from './pages/MyListings'
 import BookingPage from './pages/BookingPage'
+import EditListing from './pages/EditListing'
 
 const App = () => {
   // To Navigate on the other page
@@ -108,7 +109,7 @@ const App = () => {
           path='/booking/:id'
           element={
             <PrivateRoute isAuthenticated={isLoggedIn}>
-              <BookingPage/>
+              <BookingPage />
             </PrivateRoute>
           }
         />
@@ -121,6 +122,16 @@ const App = () => {
             </PrivateRoute>
           }
         />
+
+        <Route
+          path='/edit-listing/:id'
+          element={
+            <PrivateRoute isAuthenticated={isLoggedIn}>
+              <EditListing />
+            </PrivateRoute>
+          }
+        />
+
       </Routes>
     </>
   )

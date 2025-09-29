@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 import { FaUser, FaEnvelope, FaCalendarAlt, FaUsers, FaPhone } from "react-icons/fa";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BookingPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [bookingData, setBookingData] = useState({
         property: id,
@@ -29,7 +30,7 @@ const BookingPage = () => {
                 { ...bookingData, property: id },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`, // <--- This is required
+                        Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
                 }
@@ -37,7 +38,7 @@ const BookingPage = () => {
             setBookingSuccess(true);
             setBookingError("");
 
-            // ✅ Reset with correct snake_case keys
+            // Reset with correct snake_case keys
             setBookingData({
                 property: id,
                 name: "",
@@ -47,6 +48,10 @@ const BookingPage = () => {
                 check_out: "",
                 guests: 1
             });
+
+            setTimeout(() => {
+                navigate("/");
+            }, 1000);
         } catch (error) {
             console.error("Booking failed:", error);
             setBookingError("Booking failed. Please try again.");
