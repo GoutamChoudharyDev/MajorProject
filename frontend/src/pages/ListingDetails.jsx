@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaMapMarkerAlt, FaRupeeSign } from "react-icons/fa";
+import Reviews from '../components/review&rating/Reviews';
 
 const ListingDetails = () => {
     const { id } = useParams(); // To generate id
@@ -31,7 +32,7 @@ const ListingDetails = () => {
     }, [id]);
 
     if (loading) {
-        return <p className="text-green-600">Loading listing...</p>;
+        return <p className="text-purple-600">Loading listing...</p>;
     }
 
     if (!listing) {
@@ -104,6 +105,12 @@ const ListingDetails = () => {
             >
                 Book Now
             </button>
+
+            {/* Reviews and Ratings */}
+            <div className="mt-10 bg-gray-50 p-6 md:p-10 rounded-lg shadow-lg">
+                <Reviews listingId={listing.id} />
+            </div>
+
         </div>
     );
 }
