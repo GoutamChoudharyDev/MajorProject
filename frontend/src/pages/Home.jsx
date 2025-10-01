@@ -49,9 +49,13 @@ const Home = ({ isLoggedIn, handleLogout }) => {
       </div>
 
       {/* Listings Section */}
-      <div className="space-y-8 px-6 py-10">
+      <div className="space-y-8 px-6 pt-10 pb-0">
         {loading ? (
-          <p className="text-green-600">Loading listings...</p>
+          <div className="flex flex-col items-center justify-center py-20">
+            {/* Spinner */}
+            <div className="w-12 h-12 border-4 border-t-yellow-400 border-b-red-500 border-l-gray-300 border-r-gray-300 rounded-full animate-spin mb-4"></div>
+            <p className="text-white text-lg">Loading listings...</p>
+          </div>
         ) : (
           <Section title="🏠 Popular Homes" data={allListings} />
         )}

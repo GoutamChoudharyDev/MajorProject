@@ -17,6 +17,7 @@ const Listings = ({ setListings }) => {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [previews, setPreviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -86,7 +87,7 @@ const Listings = ({ setListings }) => {
     });
 
     try {
-       const token = localStorage.getItem("access_token"); // or wherever you store your JWT
+      const token = localStorage.getItem("access_token"); // or wherever you store your JWT
 
       const response = await axios.post(
         "http://127.0.0.1:8000/api/properties/create/",
@@ -289,14 +290,17 @@ const Listings = ({ setListings }) => {
             </div>
           )}
 
-
           {/* Submit */}
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-200"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg font-semibold shadow-lg transition-all duration-200 
+            ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"} 
+            text-white`}
           >
-            Add Listing
+            {loading ? "Adding..." : "Add Listing"}
           </button>
+
         </form>
       </div>
     </div>

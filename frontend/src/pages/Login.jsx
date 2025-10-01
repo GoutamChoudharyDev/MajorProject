@@ -12,6 +12,7 @@ const Login = ({ setIsLoggedIn }) => {
     // state for input 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     // state for error and success
     const [error, setError] = useState('');
@@ -22,6 +23,7 @@ const Login = ({ setIsLoggedIn }) => {
         e.preventDefault();
         setError('');
         setSuccess('');
+        setLoading(true);
 
         // Basic validation
         if (!email || !password) {
@@ -120,10 +122,13 @@ const Login = ({ setIsLoggedIn }) => {
 
                     <button
                         type="submit"
-                        className="w-full py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg hover:from-cyan-600 hover:to-blue-700 transition duration-300"
+                        disabled={loading}
+                        className={`w-full py-2 rounded-xl text-white font-semibold shadow-lg transition duration-300
+                        ${loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700'}`}
                     >
-                        Log In
+                        {loading ? "Logging In..." : "Log In"}
                     </button>
+
                 </form>
 
                 <p className="mt-6 text-sm text-center text-gray-200">

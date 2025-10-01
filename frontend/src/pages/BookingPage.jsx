@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const BookingPage = () => {
     const { id } = useParams();
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const [bookingData, setBookingData] = useState({
@@ -22,6 +23,7 @@ const BookingPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const token = localStorage.getItem("access_token");
 
@@ -148,10 +150,13 @@ const BookingPage = () => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full py-3 rounded-lg  bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-200"
+                        disabled={loading}
+                        className={`w-full py-3 rounded-lg text-white font-semibold shadow-lg transition-all duration-200 
+                        ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
                     >
-                        Confirm Booking
+                        {loading ? "Booking..." : "Confirm Booking"}
                     </button>
+
                 </form>
 
                 {/* Feedback Messages */}

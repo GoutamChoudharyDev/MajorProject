@@ -32,8 +32,15 @@ const ListingDetails = () => {
     }, [id]);
 
     if (loading) {
-        return <p className="text-purple-600">Loading listing...</p>;
-    }
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black">
+      {/* Spinner */}
+      <div className="w-16 h-16 border-4 border-t-yellow-400 border-b-red-500 border-l-gray-200 border-r-gray-200 rounded-full animate-spin mb-4"></div>
+      <p className="text-white text-lg">Loading listing...</p>
+    </div>
+  );
+}
+
 
     if (!listing) {
         return <p className="text-red-600">Listing not found.</p>;
