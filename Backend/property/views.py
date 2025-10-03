@@ -9,6 +9,9 @@ from .models import Property, PropertyImage
 from .serializers import PropertyListSerializer, BookingSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 
+from rest_framework import generics, permissions
+from .models import Booking
+
 # -------------------- List all properties --------------------
 class PropertiesListView(APIView):
     permission_classes = []
@@ -154,10 +157,6 @@ class MyListingDetailView(APIView):
         serializer = PropertyListSerializer(property_instance, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-# ///////////////////////////////////////////////////////////////
-from rest_framework import generics, permissions
-from .models import Booking
 
 # -------------------- Booking list --------------------
 class BookingListView(generics.ListAPIView):
