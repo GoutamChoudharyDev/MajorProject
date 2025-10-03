@@ -153,3 +153,33 @@ class MyListingDetailView(APIView):
 
         serializer = PropertyListSerializer(property_instance, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# ///////////////////////////////////////////////////////////////
+from rest_framework import generics, permissions
+from .models import Booking
+
+# -------------------- Booking list --------------------
+class BookingListView(generics.ListAPIView):
+    serializer_class = BookingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        property_id = self.request.query_params.get("property")
+        if property_id:
+            return Booking.objects.filter(property_id=property_id)
+        return Booking.objects.all()
+
+
+# -------------------- Booking Delete (Cancel Booking) --------------------
+class BookingDeleteView(generics.DestroyAPIView):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        booking = self.get_object()
+        # Only the property owner or the booking user can cancel
+        if booking.property.owner != request.user and booking.email != request.user.email:
+            return Response({"error": "Not authorized to cancel this booking"}, status=403)
+        return super().delete(request, *args, **kwargs)

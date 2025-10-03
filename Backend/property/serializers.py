@@ -16,11 +16,15 @@ class PropertyImageSerializer(serializers.ModelSerializer):
 # -------------------- PropertyListSerializer --------------------
 class PropertyListSerializer(serializers.ModelSerializer):
     images = PropertyImageSerializer(many=True, read_only=True)
+    booked = serializers.SerializerMethodField()   # ✅ new field
 
     class Meta:
         model = Property
-        fields = ['id', 'title', 'location', 'price', 'description', 'images']
+        fields = ['id', 'title', 'location', 'price', 'description', 'images', 'booked']
 
+    def get_booked(self, obj):
+        # True if there is at least one booking for this property
+        return Booking.objects.filter(property=obj).exists()
 
 # -------------------- BookingSerializer --------------------
 class BookingSerializer(serializers.ModelSerializer):

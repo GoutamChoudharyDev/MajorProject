@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 // React Icons
 import { FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaRupeeSign } from "react-icons/fa";
 
-const Card = ({ id, title, location, price, images}) => {
+const Card = ({ id, title, location, price, images, booked }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -39,8 +39,17 @@ const Card = ({ id, title, location, price, images}) => {
     <div className="card-container">
       {/* .........Upper part of Card......... */}
       {/* Image Carousel */}
-      <div className="relative w-full card-image-container"
-        onClick={handleClick}>
+      <div className={`relative w-full card-image-container ${booked ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
+        onClick={!booked ? handleClick : undefined}   // ✅ disable click if booked
+      >
+
+        {/* Booked Label */}
+        {booked && (
+          <span className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md z-10">
+            BOOKED
+          </span>
+        )}
+
         <img
           src={
             safeImages[currentIndex]

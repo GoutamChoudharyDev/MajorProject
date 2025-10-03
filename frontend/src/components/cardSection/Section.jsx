@@ -47,6 +47,7 @@ const Section = ({ title, data }) => {
                   description={item.description}
                   images={Array.isArray(item.images) ? item.images : []}
                   listing={item}
+                  booked={item.booked}
                 />
               ))}
             </div>
@@ -69,6 +70,7 @@ const Section = ({ title, data }) => {
                   description={item.description}
                   images={Array.isArray(item.images) ? item.images : []}
                   listing={item}
+                  booked={item.booked}
                 />
               ))}
             </div>
