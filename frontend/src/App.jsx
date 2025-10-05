@@ -13,6 +13,15 @@ import MyListings from './pages/MyListings'
 import BookingPage from './pages/BookingPage'
 import EditListing from './pages/EditListing'
 
+// ........Animated..........
+import { AnimatePresence, motion } from 'framer-motion';
+
+const slideVariants = {
+  initial: { x: "100%", opacity: 0 },
+  animate: { x: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
+  exit: { x: "-100%", opacity: 0, transition: { duration: 0.5, ease: "easeIn" } }
+};
+
 const App = () => {
   // To Navigate on the other page
   const navigate = useNavigate();
@@ -62,45 +71,71 @@ const App = () => {
     }
   };
 
+  // ------------------Animated----------------
   return (
-    <>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         <Route
           path='/'
-          element={<Home isLoggedIn={isLoggedIn} handleLogout={handleLogout} listings={listings} />}
+          element={
+            <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+              <Home isLoggedIn={isLoggedIn} handleLogout={handleLogout} listings={listings} />
+            </motion.div>
+          }
         />
 
         <Route
           path='/login'
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          element={
+            <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+              <Login setIsLoggedIn={setIsLoggedIn} />
+            </motion.div>
+          }
         />
 
         <Route
           path='/register'
-          element={<Signup />}
+          element={
+            <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+              <Signup />
+            </motion.div>
+          }
         />
 
         <Route
           path='/about'
-          element={<About />}
+          element={
+            <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+              <About />
+            </motion.div>
+          }
         />
 
         <Route
           path='/contact'
-          element={<Contact />}
+          element={
+            <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+              <Contact />
+            </motion.div>
+          }
         />
 
         <Route
           path='/listing/:id'
-          element={<ListingDetails />}
+          element={
+            <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+              <ListingDetails />
+            </motion.div>
+          }
         />
 
-        {/* Protected Route */}
         <Route
           path='/listings'
           element={
             <PrivateRoute isAuthenticated={isLoggedIn}>
-              <Listings setListings={setListings} />
+              <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+                <Listings setListings={setListings} />
+              </motion.div>
             </PrivateRoute>
           }
         />
@@ -109,7 +144,9 @@ const App = () => {
           path='/booking/:id'
           element={
             <PrivateRoute isAuthenticated={isLoggedIn}>
-              <BookingPage />
+              <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+                <BookingPage />
+              </motion.div>
             </PrivateRoute>
           }
         />
@@ -118,7 +155,9 @@ const App = () => {
           path='/mylistings'
           element={
             <PrivateRoute isAuthenticated={isLoggedIn}>
-              <MyListings />
+              <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+                <MyListings />
+              </motion.div>
             </PrivateRoute>
           }
         />
@@ -127,14 +166,15 @@ const App = () => {
           path='/edit-listing/:id'
           element={
             <PrivateRoute isAuthenticated={isLoggedIn}>
-              <EditListing />
+              <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
+                <EditListing />
+              </motion.div>
             </PrivateRoute>
           }
         />
-
       </Routes>
-    </>
-  )
+    </AnimatePresence>
+  );
 }
 
 export default App

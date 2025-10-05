@@ -17,6 +17,7 @@ const EditListing = () => {
   const [previews, setPreviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -73,6 +74,7 @@ const EditListing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setSubmitting(true); // start submitting
     const validImages = formData.images.length > 0 ? formData.images : [];
     if (validImages.length + existingImages.length < 3) {
       return alert("Please have at least 3 images (existing + new).");
@@ -101,13 +103,13 @@ const EditListing = () => {
   };
 
   if (loading)
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black">
-      {/* Spinner */}
-      <div className="w-16 h-16 border-4 border-t-yellow-400 border-b-red-500 border-l-gray-200 border-r-gray-200 rounded-full animate-spin mb-4"></div>
-      <p className="text-white text-lg">Loading listing...</p>
-    </div>
-  );
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black">
+        {/* Spinner */}
+        <div className="w-16 h-16 border-4 border-t-yellow-400 border-b-red-500 border-l-gray-200 border-r-gray-200 rounded-full animate-spin mb-4"></div>
+        <p className="text-white text-lg">Loading listing...</p>
+      </div>
+    );
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black md:p-6 p-3">
@@ -188,10 +190,16 @@ const EditListing = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-200"
+            disabled={submitting}
+            className={`w-full py-3 rounded-lg text-white font-semibold shadow-lg transition-all duration-200
+            ${submitting
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600'
+              }`}
           >
-            Update Listing
+            {submitting ? "Updating..." : "Update Listing"}
           </button>
+
         </form>
       </div>
     </div>
