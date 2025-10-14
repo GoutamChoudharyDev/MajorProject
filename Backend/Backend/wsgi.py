@@ -15,11 +15,9 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 
 # application = get_wsgi_application()
 
-
 import os
 from django.core.wsgi import get_wsgi_application
 
-# Update this line:
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Backend.Backend.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Backend.settings")
 
 application = get_wsgi_application()

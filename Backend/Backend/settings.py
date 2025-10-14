@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "account",  # Custom app for user accounts
+    "accounts",  # Custom app for user accounts
 
     "rest_framework",  # Django REST Framework for API development
     "rest_framework_simplejwt",  # JWT authentication for REST Framework
@@ -129,8 +129,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "Backend.wsgi.application"
-
+# WSGI_APPLICATION = "Backend.wsgi.application"
+WSGI_APPLICATION = "Backend.Backend.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
