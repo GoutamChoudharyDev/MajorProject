@@ -6,6 +6,10 @@ import sys
 
 def main():
     """Run administrative tasks."""
+
+    # Add parent folder to Python path so apps like 'accounts' can be found
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
     # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Backend.settings")
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Backend.Backend.settings")
 
