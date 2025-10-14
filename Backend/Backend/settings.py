@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    "accounts",  # Custom app for user accounts
+    "account",  # Custom app for user accounts
 
     "rest_framework",  # Django REST Framework for API development
     "rest_framework_simplejwt",  # JWT authentication for REST Framework
