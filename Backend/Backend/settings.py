@@ -31,13 +31,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+# Use environment variable to switch between dev and production
+DEBUG = os.getenv("DEBUG", "False") == "True" #changes.........1
 
 # ALLOWED_HOSTS = []
 # ...............changes......................
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
+# WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
+
+#changes.........2
+# Set allowed hosts for deployment
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
+WEBSITE_URL = os.getenv("WEBSITE_URL", "http://localhost:8000")
 
 SITE_ID = 1  # Default site ID for Django sites framework
 
@@ -98,6 +106,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    # changes............3
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Must be high for static files
 ]
 
 ROOT_URLCONF = "Backend.urls"
@@ -129,6 +140,7 @@ WSGI_APPLICATION = "Backend.wsgi.application"
 
 # if USE_POSTGRES:
     # PostgreSQL configuration for collaboration
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -191,6 +203,10 @@ MEDIA_URL = "/media/"
 # changes.....
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# changes.........4
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
 
 # Default primary key field type
@@ -231,11 +247,11 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
+CORS_ALLOW_ALL_ORIGINS = False #5
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # vite/React
     "http://localhost:8000",  # Django development server   
 ]
-
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
 
