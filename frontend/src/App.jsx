@@ -4,7 +4,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import About from './pages/About'
-import Contact from './pages/Contact'
+// import Contact from './pages/Contact'
 import axios from 'axios'
 import Listings from './pages/Listings'
 import ListingDetails from './pages/ListingDetails'
@@ -111,14 +111,14 @@ const App = () => {
           }
         />
 
-        <Route
+        {/* <Route
           path='/contact'
           element={
             <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
               <Contact />
             </motion.div>
           }
-        />
+        /> */}
 
         <Route
           path='/listing/:id'
