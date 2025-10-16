@@ -41,7 +41,16 @@ const Signup = () => {
 
         //Connect React Frontend to Django using fetch..............
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
+            // Local..........
+            // const response = await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
+            //     username,
+            //     email,
+            //     password,
+            //     password2,
+            // });
+
+            // Deployement.....
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/accounts/register/`, {
                 username,
                 email,
                 password,

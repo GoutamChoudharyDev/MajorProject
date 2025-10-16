@@ -23,9 +23,16 @@ const ListingDetails = () => {
     useEffect(() => {
         const fetchListing = async () => {
             try {
+                // Local.......
+                // const response = await axios.get(
+                //     `http://127.0.0.1:8000/api/properties/` // fetch all properties
+                // );
+
+                // Deployed.....
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/properties/` // fetch all properties
+                    `${import.meta.env.VITE_API_URL}/api/properties/`
                 );
+
                 const allListings = response.data;
                 const foundListing = allListings.find((l) => String(l.id) === String(id));
                 setListing(foundListing || null);
@@ -103,7 +110,8 @@ const ListingDetails = () => {
                     />
                     {listing.images[1] && (
                         <img
-                            src={`http://127.0.0.1:8000/${listing.images[1].image}`}
+                            // src={`http://127.0.0.1:8000/${listing.images[1].image}`}
+                            src={`${import.meta.env.VITE_API_URL}/${listing.images[0].image}`}
                             alt="Second"
                             className="w-full h-50 object-cover rounded-lg"
                         />

@@ -27,8 +27,21 @@ const BookingPage = () => {
         try {
             const token = localStorage.getItem("access_token");
 
+            // Local
+            // await axios.post(
+            //     "http://127.0.0.1:8000/api/properties/bookings/",
+            //     { ...bookingData, property: id },
+            //     {
+            //         headers: {
+            //             Authorization: `Bearer ${token}`,
+            //             "Content-Type": "application/json",
+            //         },
+            //     }
+            // );
+
+            // deployement....
             await axios.post(
-                "http://127.0.0.1:8000/api/properties/bookings/",
+                `${import.meta.env.VITE_API_URL}/api/properties/bookings/`,
                 { ...bookingData, property: id },
                 {
                     headers: {
@@ -37,6 +50,7 @@ const BookingPage = () => {
                     },
                 }
             );
+
             setBookingSuccess(true);
             setBookingError("");
 

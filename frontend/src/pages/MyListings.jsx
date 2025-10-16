@@ -19,8 +19,15 @@ const MyListings = () => {
           return;
         }
 
+        // Local.......
+        // const response = await axios.get(
+        //   "http://127.0.0.1:8000/api/properties/mylistings/",
+        //   { headers: { Authorization: `Bearer ${token}` } }
+        // );
+
+        // Deployed.....
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/properties/mylistings/",
+          `${import.meta.env.VITE_API_URL}/api/properties/mylistings/`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -54,8 +61,15 @@ const MyListings = () => {
         return;
       }
 
+      // Local.........
+      // await axios.delete(
+      //   `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
+      //   { headers: { Authorization: `Bearer ${token}` } }
+      // );
+
+      // deployed........
       await axios.delete(
-        `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
+        `${import.meta.env.VITE_API_URL}/api/properties/mylistings/${id}/`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -80,8 +94,15 @@ const MyListings = () => {
       }
 
       // Correct backend URL for booking list
+      // Local.....
+      // const bookingsRes = await axios.get(
+      //   `http://127.0.0.1:8000/api/properties/bookings/list/?property=${propertyId}`,
+      //   { headers: { Authorization: `Bearer ${token}` } }
+      // );
+
+      // Deployed....
       const bookingsRes = await axios.get(
-        `http://127.0.0.1:8000/api/properties/bookings/list/?property=${propertyId}`,
+        `${import.meta.env.VITE_API_URL}/api/properties/bookings/list/?property=${propertyId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -93,10 +114,15 @@ const MyListings = () => {
       const bookingId = bookingsRes.data[0].id;
 
       // Correct backend URL for booking delete
-      await axios.delete(
-        `http://127.0.0.1:8000/api/properties/bookings/${bookingId}/`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      // await axios.delete(
+      //   `http://127.0.0.1:8000/api/properties/bookings/${bookingId}/`,
+      //   { headers: { Authorization: `Bearer ${token}` } }
+      // );
+
+      // Deployed.....
+      await axios.delete(`${API_URL}/api/properties/bookings/${bookingId}/`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       // Update UI
       setMyListings((prev) =>

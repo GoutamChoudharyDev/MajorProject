@@ -200,17 +200,11 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 MEDIA_URL = "/media/"
-# changes.....
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# changes.........4
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -247,17 +241,13 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-CORS_ALLOW_ALL_ORIGINS = False #5
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",  # vite/React
-#     "http://localhost:8000",  # Django development server   
-# ]
+CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
     "https://major-project-omega-three.vercel.app",  # deployed React app
     "https://majorproject-easyr.onrender.com",   # optional, if you ever call backend from backend
-    "http://localhost:5173",  # vite/React
-    "http://localhost:8000", 
+    # "http://localhost:5173",  # vite/React
+    # "http://localhost:8000", 
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests

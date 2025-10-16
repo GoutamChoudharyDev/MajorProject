@@ -89,8 +89,21 @@ const Listings = ({ setListings }) => {
     try {
       const token = localStorage.getItem("access_token"); // or wherever you store your JWT
 
+      // Local........
+      // const response = await axios.post(
+      //   "http://127.0.0.1:8000/api/properties/create/",
+      //   data,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+
+      // Deployed..........
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/properties/create/",
+        `${import.meta.env.VITE_API_URL}/api/properties/create/`,
         data,
         {
           headers: {

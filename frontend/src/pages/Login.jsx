@@ -33,10 +33,18 @@ const Login = ({ setIsLoggedIn }) => {
 
         // Connect frontend with Django(Backend)......
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
+            // For local
+            // const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
+            //     email,
+            //     password
+            // });
+
+            // for deployment.......
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/accounts/login/`, {
                 email,
                 password
             });
+
 
             // console.log("Login response:", response.data); // Add this line
 
