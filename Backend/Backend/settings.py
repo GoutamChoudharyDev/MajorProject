@@ -248,9 +248,16 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_ALL_ORIGINS = False #5
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",  # vite/React
+#     "http://localhost:8000",  # Django development server   
+# ]
+
 CORS_ALLOWED_ORIGINS = [
+    "https://major-project-omega-three.vercel.app",  # deployed React app
+    "https://majorproject-easyr.onrender.com",   # optional, if you ever call backend from backend
     "http://localhost:5173",  # vite/React
-    "http://localhost:8000",  # Django development server   
+    "http://localhost:8000", 
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests

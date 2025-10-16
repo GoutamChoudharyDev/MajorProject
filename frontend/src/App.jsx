@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -25,6 +25,7 @@ const slideVariants = {
 const App = () => {
   // To Navigate on the other page
   const navigate = useNavigate();
+  const location = useLocation();
 
   // UseState to Check login or not
   const [isLoggedIn, setIsLoggedIn] = useState(false);
