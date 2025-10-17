@@ -20,7 +20,13 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.http import HttpResponse#testing
+
+def home(request):
+    return HttpResponse("✅ Backend is running successfully!")
+
 urlpatterns = [
+    path("", home, name="home"),
     path("admin/", admin.site.urls),
     path("api/accounts/", include('accounts.urls')),
     path("api/properties/", include('property.urls')),
