@@ -14,7 +14,6 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
-# changes........
 import dj_database_url
 
 # Load environment variables from .env file
@@ -43,7 +42,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True" #changes.........1
 
 #changes.........2
 # Set allowed hosts for deployment
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost,majorproject-easyr.onrender.com").split(",")
 
 WEBSITE_URL = os.getenv("WEBSITE_URL", "http://localhost:8000")
 
@@ -69,7 +68,6 @@ ADMIN_EMAIL = "rc.goutam.choudhary@gmail.com"
 # .............................................................
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -79,6 +77,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "accounts",  # Custom app for user accounts
+    "property",  # Custom app for property management
 
     "rest_framework",  # Django REST Framework for API development
     "rest_framework_simplejwt",  # JWT authentication for REST Framework
@@ -86,14 +85,12 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",  # Token authentication for REST Framework
 
     "corsheaders",  # CORS headers for cross-origin requests
-    
     "allauth",  # Django Allauth for user registration and authentication
     "allauth.account",  # Allauth account management
     "allauth.socialaccount", # changes..........
     "dj_rest_auth",  # Django REST Auth for user authentication
     "dj_rest_auth.registration",  # Registration endpoints for REST Auth
 
-    "property",  # Custom app for property management
 ]
 
 MIDDLEWARE = [
@@ -106,8 +103,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
-    # changes............3
     "whitenoise.middleware.WhiteNoiseMiddleware",  # Must be high for static files
 ]
 
@@ -133,14 +128,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "Backend.Backend.wsgi.application"
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# Check if we're using PostgreSQL (for production/collaboration) or SQLite (for development)
-# USE_POSTGRES = os.getenv('USE_POSTGRES', 'False').lower() == 'true'
-
-# if USE_POSTGRES:
-    # PostgreSQL configuration for collaboration
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -199,18 +186,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-MEDIA_URL = "/media/"
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
 AUTH_USER_MODEL = 'accounts.User'  # Custom user model
-
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
