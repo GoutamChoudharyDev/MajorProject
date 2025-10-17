@@ -5,13 +5,19 @@ function MyComponent() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetchData().then(setData).catch(console.error);
+    fetchData()
+      .then((res) => setData(res))
+      .catch((err) => console.error("Fetch error:", err));
   }, []);
 
   return (
     <div>
       <h1>Data from Backend:</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {data ? (
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

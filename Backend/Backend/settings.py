@@ -48,7 +48,6 @@ WEBSITE_URL = os.getenv("WEBSITE_URL", "http://localhost:8000")
 
 SITE_ID = 1  # Default site ID for Django sites framework
 
-
 # ...................................................
 # ================================
 # Email Configuration
