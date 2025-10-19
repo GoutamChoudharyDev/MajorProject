@@ -27,7 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
+# SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'fallback-secret-key')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -42,7 +44,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True" #changes.........1
 
 #changes.........2
 # Set allowed hosts for deployment
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost,majorproject-easyr.onrender.com").split(",")
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost,majorproject-easyr.onrender.com").split(",")
+ALLOWED_HOSTS = ['*']
 
 WEBSITE_URL = os.getenv("WEBSITE_URL", "http://localhost:8000")
 
