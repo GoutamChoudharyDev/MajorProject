@@ -22,12 +22,7 @@ const Home = ({ isLoggedIn, handleLogout }) => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        // Local.......
-        // const response = await axios.get("http://127.0.0.1:8000/api/properties/");
-
-        // Deployed.....
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/properties/`);
-
+        const response = await axios.get("http://127.0.0.1:8000/api/properties/");
         setAllListings(response.data); // store all listings from backend
       } catch (error) {
         console.error("Error fetching listings:", error);
@@ -82,7 +77,7 @@ const Home = ({ isLoggedIn, handleLogout }) => {
     }
   }, [loading]); // only after listings load
 
-
+  
   // -----------------Animated-------------------------
   return (
     <div ref={pageRef}>

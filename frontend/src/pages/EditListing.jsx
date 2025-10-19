@@ -25,15 +25,8 @@ const EditListing = () => {
         const token = localStorage.getItem("access_token");
         if (!token) throw new Error("Unauthorized");
 
-        // Local...
-        // const response = await axios.get(
-        //   "http://127.0.0.1:8000/api/properties/mylistings/",
-        //   { headers: { Authorization: `Bearer ${token}` } }
-        // );
-
-        // deployed...
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/properties/mylistings/`,
+          "http://127.0.0.1:8000/api/properties/mylistings/",
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -96,22 +89,11 @@ const EditListing = () => {
 
     try {
       const token = localStorage.getItem("access_token");
-
-      // Local.......
-      // await axios.put(
-      //   `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
-      //   data,
-      //   { headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` } }
-      // );
-
-      // Deployed.........
       await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/properties/mylistings/${id}/`,
+        `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
         data,
         { headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` } }
       );
-
-
       alert("Listing updated successfully");
       navigate("/mylistings");
     } catch (err) {
