@@ -10,11 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
-import os
 from dotenv import load_dotenv
-# changes........
 import dj_database_url
 
 # Load environment variables from .env file
@@ -24,25 +23,29 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+# ======================================
+# SECURITY & DEBUG SETTINGS
+# ======================================
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
+# SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1")
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-# ALLOWED_HOSTS = []
 # ...............changes......................
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+# Deployment....
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://majorproject-easyr.onrender.com",
+]
 
 WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
 
 SITE_ID = 1  # Default site ID for Django sites framework
 
-
-# ...................................................
 # ================================
 # Email Configuration
 # ================================
@@ -60,7 +63,9 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ADMIN_EMAIL = "rc.goutam.choudhary@gmail.com"
 # .............................................................
 
-# Application definition
+# ======================================
+# INSTALLED APPS
+# ======================================
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -71,25 +76,29 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "accounts",  # Custom app for user accounts
+    "property",  # Custom app for property management
 
     "rest_framework",  # Django REST Framework for API development
+    "rest_framework.authtoken",  # Token authentication for REST Framework
     "rest_framework_simplejwt",  # JWT authentication for REST Framework
     "rest_framework_simplejwt.token_blacklist",  # JWT token blacklist for logout
-    "rest_framework.authtoken",  # Token authentication for REST Framework
-
     "corsheaders",  # CORS headers for cross-origin requests
-    
+
+
     "allauth",  # Django Allauth for user registration and authentication
     "allauth.account",  # Allauth account management
     "allauth.socialaccount", # changes..........
     "dj_rest_auth",  # Django REST Auth for user authentication
     "dj_rest_auth.registration",  # Registration endpoints for REST Auth
 
-    "property",  # Custom app for property management
 ]
 
+# ======================================
+# MIDDLEWARE
+# ======================================
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # ✅ For static files on Render
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Middleware for handling CORS
     "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
@@ -121,39 +130,38 @@ TEMPLATES = [
 WSGI_APPLICATION = "Backend.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# ======================================
+# DATABASE (Supabase PostgreSQL)
+# ======================================
 
-# Check if we're using PostgreSQL (for production/collaboration) or SQLite (for development)
-# USE_POSTGRES = os.getenv('USE_POSTGRES', 'False').lower() == 'true'
+# Local..........
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv("SUPABASE_DB_NAME"),
+#         'USER': os.getenv("SUPABASE_DB_USER"),
+#         'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
+#         'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
+#         'PORT': os.getenv("SUPABASE_DB_PORT"),
+#         'OPTIONS': {
+#             'sslmode': 'require',   # ✅ Supabase requires SSL
+#         },
+#     },
+# }
 
-# if USE_POSTGRES:
-    # PostgreSQL configuration for collaboration
+# Deployment.........
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("SUPABASE_DB_NAME"),
-        'USER': os.getenv("SUPABASE_DB_USER"),
-        'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
-        'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
-        'PORT': os.getenv("SUPABASE_DB_PORT"),
-        'OPTIONS': {
-            'sslmode': 'require',   # ✅ Supabase requires SSL
-        },
-    },
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),  # DATABASE_URL will be set on Render
+        conn_max_age=600,                   # keeps connections alive
+        ssl_require=True                     # required by Supabase
+    )
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-}
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+# ======================================
+# PASSWORD VALIDATION
+# ======================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -171,36 +179,19 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = "static/"
-MEDIA_URL = "/media/"
-# changes.....
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-
+# ======================================
+# AUTHENTICATION
+# ======================================
 AUTH_USER_MODEL = 'accounts.User'  # Custom user model
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
@@ -231,15 +222,39 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # vite/React
-    "http://localhost:8000",  # Django development server   
-]
-
-
-CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
-
 REST_AUTH = {
     "USE_JWT": True,  # Use JWT for authentication
     "JWT_AUTH_HTTPONLY": False
 }
+
+# ======================================
+# CORS (React Frontend)
+# ======================================
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # vite/React
+    "http://localhost:8000",  # Django development server   
+]
+CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
+
+
+# ======================================
+# STATIC & MEDIA FILES (for Render)
+# ======================================
+STATIC_URL = "static/"
+# STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# ======================================
+# INTERNATIONALIZATION
+# ======================================
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "UTC"
+USE_I18N = True
+USE_TZ = True
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
