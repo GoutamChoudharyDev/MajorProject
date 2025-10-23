@@ -24,7 +24,7 @@ from django.core.wsgi import get_wsgi_application
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Set the Django settings module (double Backend for your folder structure)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Backend.Backend.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Backend.settings")
 
 # Get WSGI application
 application = get_wsgi_application()
