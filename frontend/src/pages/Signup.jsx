@@ -41,12 +41,18 @@ const Signup = () => {
 
         //Connect React Frontend to Django using fetch..............
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
-                username,
-                email,
-                password,
-                password2,
-            });
+            // const response = await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
+            //     username,
+            //     email,
+            //     password,
+            //     password2,
+            // });
+
+            const response = await axios.post(
+                'https://majorproject-esyrent.onrender.com/api/accounts/register/',
+                { username, email, password, password2 },
+                { withCredentials: true } // only if your backend uses cookies/sessions
+            );
 
             // Show success message
             setSuccess(response.data.message || 'Signup successful!');
