@@ -51,7 +51,7 @@ const Signup = () => {
             const response = await axios.post(
                 'https://majorproject-esyrent.onrender.com/api/accounts/register/',
                 { username, email, password, password2 },
-                { withCredentials: true } // only if your backend uses cookies/sessions
+                // { withCredentials: true } // only if your backend uses cookies/sessions
             );
 
             // Show success message

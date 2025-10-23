@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -49,7 +49,8 @@ const App = () => {
         console.warn("No access token found, skipping logout request.");
       } else {
         await axios.post(
-          'http://localhost:8000/api/accounts/logout/',
+          // 'http://localhost:8000/api/accounts/logout/',
+          'https://majorproject-esyrent.onrender.com/api/accounts/logout/',
           { refresh_token }, // body data
           {
             headers: {
@@ -111,14 +112,14 @@ const App = () => {
           }
         />
 
-        <Route
+        {/* <Route
           path='/contact'
           element={
             <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
               <Contact />
             </motion.div>
           }
-        />
+        /> */}
 
         <Route
           path='/listing/:id'

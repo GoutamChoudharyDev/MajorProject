@@ -22,16 +22,14 @@ const Card = ({ id, title, location, price, images, booked }) => {
 
   // function to Show Previous Image
   const prevImage = () => {
-    // If index is 0 then show the last image Else preveious Image
     setCurrentIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
+      prev === 0 ? safeImages.length - 1 : prev - 1
     );
   };
 
   const nextImage = () => {
-    // If index is last then show the first image Else show next image
     setCurrentIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
+      prev === safeImages.length - 1 ? 0 : prev + 1
     );
   };
 
@@ -53,7 +51,8 @@ const Card = ({ id, title, location, price, images, booked }) => {
         <img
           src={
             safeImages[currentIndex]
-              ? `http://127.0.0.1:8000/${safeImages[currentIndex].image}`
+              // ? `http://127.0.0.1:8000/${safeImages[currentIndex].image}`
+              ? `https://majorproject-esyrent.onrender.com/${safeImages[currentIndex].image}`
               : '/default-placeholder.jpg'
           }
           alt={title}

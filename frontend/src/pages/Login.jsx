@@ -41,9 +41,8 @@ const Login = ({ setIsLoggedIn }) => {
             const response = await axios.post(
                 'https://majorproject-esyrent.onrender.com/api/accounts/login/',
                 { email, password },
-                { withCredentials: true } // Only if your backend uses cookies/sessions
+                // { withCredentials: true } // Only if your backend uses cookies/sessions
             );
-
 
             // console.log("Login response:", response.data); // Add this line
 

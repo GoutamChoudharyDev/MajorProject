@@ -20,15 +20,31 @@ const ListingDetails = () => {
 
     const pageRef = useRef(null);
 
+    // useEffect(() => {
+    //     const fetchListing = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 `http://127.0.0.1:8000/api/properties/` // fetch all properties
+    //             );
+    //             const allListings = response.data;
+    //             const foundListing = allListings.find((l) => String(l.id) === String(id));
+    //             setListing(foundListing || null);
+    //         } catch (error) {
+    //             console.error("Error fetching listing:", error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+    //     fetchListing();
+    // }, [id]);
+
     useEffect(() => {
         const fetchListing = async () => {
             try {
                 const response = await axios.get(
-                    `http://127.0.0.1:8000/api/properties/` // fetch all properties
+                    `https://majorproject-esyrent.onrender.com/api/properties/${id}/`
                 );
-                const allListings = response.data;
-                const foundListing = allListings.find((l) => String(l.id) === String(id));
-                setListing(foundListing || null);
+                setListing(response.data);
             } catch (error) {
                 console.error("Error fetching listing:", error);
             } finally {
@@ -37,6 +53,7 @@ const ListingDetails = () => {
         };
         fetchListing();
     }, [id]);
+
 
     // Animate content after loading
     useEffect(() => {
@@ -69,7 +86,6 @@ const ListingDetails = () => {
         );
     }
 
-
     if (!listing) {
         return <p className="text-red-600">Listing not found.</p>;
     }
@@ -97,21 +113,23 @@ const ListingDetails = () => {
             {listing.images && listing.images.length > 0 ? (
                 <div className="grid gap-4 mb-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 fade-item">
                     <img
-                        src={listing.images[0]?.image ? `http://127.0.0.1:8000/${listing.images[0].image}` : "default-placeholder.jpg"}
+                        // src={listing.images[0]?.image ? `http://127.0.0.1:8000/${listing.images[0].image}` : "default-placeholder.jpg"}
+                        src={listing.images[0]?.image ? `https://majorproject-esyrent.onrender.com/${listing.images[0].image}` : "default-placeholder.jpg"}
                         alt="Main"
                         className="w-full h-50 object-cover rounded-lg md:col-span-2 md:row-span-2 md:h-full"
                     />
                     {listing.images[1] && (
                         <img
-                            src={`http://127.0.0.1:8000/${listing.images[1].image}`}
+                            // src={`http://127.0.0.1:8000/${listing.images[1].image}`}
+                            src={listing.images[0]?.image ? `https://majorproject-esyrent.onrender.com/${listing.images[0].image}` : "default-placeholder.jpg"}
                             alt="Second"
                             className="w-full h-50 object-cover rounded-lg"
                         />
                     )}
                     {listing.images[2] && (
                         <img
-                            src={`http://127.0.0.1:8000/${listing.images[2].image}`}
-                            alt="Third"
+                            // src={`http://127.0.0.1:8000/${listing.images[2].image}`}
+                            src={listing.images[0]?.image ? `https://majorproject-esyrent.onrender.com/${listing.images[0].image}` : "default-placeholder.jpg"}
                             className="w-full h-50 object-cover rounded-lg"
                         />
                     )}

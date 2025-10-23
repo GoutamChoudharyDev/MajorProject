@@ -25,8 +25,13 @@ const EditListing = () => {
         const token = localStorage.getItem("access_token");
         if (!token) throw new Error("Unauthorized");
 
+        // const response = await axios.get(
+        //   "http://127.0.0.1:8000/api/properties/mylistings/",
+        //   { headers: { Authorization: `Bearer ${token}` } }
+        // );
+
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/properties/mylistings/",
+          "https://majorproject-esyrent.onrender.com/api/properties/mylistings/",
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -42,7 +47,8 @@ const EditListing = () => {
         });
 
         setExistingImages(listing.images.map((img) => img.image));
-        setPreviews(listing.images.map((img) => `http://127.0.0.1:8000/${img.image}`));
+        // setPreviews(listing.images.map((img) => `http://127.0.0.1:8000/${img.image}`));
+        setPreviews(listing.images.map((img) => `https://majorproject-esyrent.onrender.com/${img.image}`));
       } catch (err) {
         console.error(err);
         alert("Failed to load listing");
@@ -89,11 +95,19 @@ const EditListing = () => {
 
     try {
       const token = localStorage.getItem("access_token");
+      // await axios.put(
+      //   `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
+      //   data,
+      //   { headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` } }
+      // );
+
       await axios.put(
-        `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
+        `https://majorproject-esyrent.onrender.com/api/properties/mylistings/${id}/`,
         data,
         { headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` } }
       );
+
+
       alert("Listing updated successfully");
       navigate("/mylistings");
     } catch (err) {
