@@ -240,8 +240,8 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
 # ======================================
 # STATIC & MEDIA FILES (for Render)
 # ======================================
-STATIC_URL = "static/"
-# STATIC_URL = "/static/"
+# STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
