@@ -230,15 +230,24 @@ REST_AUTH = {
 # ======================================
 # CORS (React Frontend)
 # ======================================
-CORS_ALLOWED_ORIGINS = [
-    # Local........
-    # "http://localhost:5173",  # vite/React
-    # "http://localhost:8000",  # Django development server   
+# CORS_ALLOWED_ORIGINS = [
+#     # Local........
+#     # "http://localhost:5173",  # vite/React
+#     # "http://localhost:8000",  # Django development server   
 
-    # Deployement....
+#     # Deployement....
+#     "https://major-project-two-tau.vercel.app",
+#     "https://majorproject-esyrent.onrender.com",
+# ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://major-project-two-tau.vercel.app",
+]
+CORS_ALLOWED_ORIGINS = [
     "https://major-project-two-tau.vercel.app",
     "https://majorproject-esyrent.onrender.com",
 ]
+
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
 
 
