@@ -135,28 +135,28 @@ WSGI_APPLICATION = "Backend.wsgi.application"
 # ======================================
 
 # Local..........
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv("SUPABASE_DB_NAME"),
-#         'USER': os.getenv("SUPABASE_DB_USER"),
-#         'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
-#         'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
-#         'PORT': os.getenv("SUPABASE_DB_PORT"),
-#         'OPTIONS': {
-#             'sslmode': 'require',   # ✅ Supabase requires SSL
-#         },
-#     },
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("SUPABASE_DB_NAME"),
+        'USER': os.getenv("SUPABASE_DB_USER"),
+        'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
+        'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
+        'PORT': os.getenv("SUPABASE_DB_PORT"),
+        'OPTIONS': {
+            'sslmode': 'require',   # ✅ Supabase requires SSL
+        },
+    },
+}
 
 # Deployment.........
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),  # DATABASE_URL will be set on Render
-        conn_max_age=600,                   # keeps connections alive
-        ssl_require=True                     # required by Supabase
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL'),  # DATABASE_URL will be set on Render
+#         conn_max_age=600,                   # keeps connections alive
+#         ssl_require=True                     # required by Supabase
+#     )
+# }
 
 
 # ======================================
