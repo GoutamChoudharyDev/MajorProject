@@ -42,7 +42,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://majorproject-easyr.onrender.com",
 ]
 
-WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
+# WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
+WEBSITE_URL = os.getenv("WEBSITE_URL", "http://localhost:8000")
 
 SITE_ID = 1  # Default site ID for Django sites framework
 
