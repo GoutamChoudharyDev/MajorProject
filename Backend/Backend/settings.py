@@ -39,7 +39,7 @@ DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 # Deployment....
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
-    "https://majorproject-easyr.onrender.com",
+    "https://majorproject-esyrent.onrender.com",
 ]
 
 # WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
@@ -243,8 +243,8 @@ REST_AUTH = {
 # ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://major-project-two-tau.vercel.app",
     "https://majorproject-esyrent.onrender.com",
+    "https://major-project-two-tau.vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
