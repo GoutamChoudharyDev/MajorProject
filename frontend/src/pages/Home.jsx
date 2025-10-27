@@ -19,28 +19,11 @@ const Home = ({ isLoggedIn, handleLogout }) => {
   const subtitleRef = useRef(null);
 
   // Fetch listings
-  // useEffect(() => {
-  //   const fetchListings = async () => {
-  //     try {
-  //       const response = await axios.get("http://127.0.0.1:8000/api/properties/");
-  //       setAllListings(response.data); // store all listings from backend
-  //     } catch (error) {
-  //       console.error("Error fetching listings:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchListings();
-  // }, []);
-
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const response = await axios.get(
-          "https://majorproject-esyrent.onrender.com/api/properties/"
-        );
-        setAllListings(response.data);
+        const response = await axios.get("http://127.0.0.1:8000/api/properties/");
+        setAllListings(response.data); // store all listings from backend
       } catch (error) {
         console.error("Error fetching listings:", error);
       } finally {
@@ -94,7 +77,7 @@ const Home = ({ isLoggedIn, handleLogout }) => {
     }
   }, [loading]); // only after listings load
 
-
+  
   // -----------------Animated-------------------------
   return (
     <div ref={pageRef}>

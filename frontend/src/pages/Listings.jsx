@@ -89,19 +89,8 @@ const Listings = ({ setListings }) => {
     try {
       const token = localStorage.getItem("access_token"); // or wherever you store your JWT
 
-      // const response = await axios.post(
-      //   "http://127.0.0.1:8000/api/properties/create/",
-      //   data,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
-
       const response = await axios.post(
-        "https://majorproject-esyrent.onrender.com/api/properties/create/",
+        "http://127.0.0.1:8000/api/properties/create/",
         data,
         {
           headers: {

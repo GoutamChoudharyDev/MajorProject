@@ -27,19 +27,8 @@ const BookingPage = () => {
         try {
             const token = localStorage.getItem("access_token");
 
-            // await axios.post(
-            //     "http://127.0.0.1:8000/api/properties/bookings/",
-            //     { ...bookingData, property: id },
-            //     {
-            //         headers: {
-            //             Authorization: `Bearer ${token}`,
-            //             "Content-Type": "application/json",
-            //         },
-            //     }
-            // );
-
             await axios.post(
-                "https://majorproject-esyrent.onrender.com/api/properties/bookings/",
+                "http://127.0.0.1:8000/api/properties/bookings/",
                 { ...bookingData, property: id },
                 {
                     headers: {
@@ -48,7 +37,6 @@ const BookingPage = () => {
                     },
                 }
             );
-
             setBookingSuccess(true);
             setBookingError("");
 

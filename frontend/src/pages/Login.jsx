@@ -33,16 +33,10 @@ const Login = ({ setIsLoggedIn }) => {
 
         // Connect frontend with Django(Backend)......
         try {
-            // const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
-            //     email,
-            //     password
-            // });
-
-            const response = await axios.post(
-                'https://majorproject-esyrent.onrender.com/api/accounts/login/',
-                { email, password },
-                // { withCredentials: true } // Only if your backend uses cookies/sessions
-            );
+            const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
+                email,
+                password
+            });
 
             // console.log("Login response:", response.data); // Add this line
 

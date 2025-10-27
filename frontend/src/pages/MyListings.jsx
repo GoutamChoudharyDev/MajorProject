@@ -19,13 +19,8 @@ const MyListings = () => {
           return;
         }
 
-        // const response = await axios.get(
-        //   "http://127.0.0.1:8000/api/properties/mylistings/",
-        //   { headers: { Authorization: `Bearer ${token}` } }
-        // );
-
         const response = await axios.get(
-          "https://majorproject-esyrent.onrender.com/api/properties/mylistings/",
+          "http://127.0.0.1:8000/api/properties/mylistings/",
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -59,13 +54,8 @@ const MyListings = () => {
         return;
       }
 
-      // await axios.delete(
-      //   `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
-      //   { headers: { Authorization: `Bearer ${token}` } }
-      // );
-
       await axios.delete(
-        `https://majorproject-esyrent.onrender.com/api/properties/mylistings/${id}/`,
+        `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -90,13 +80,8 @@ const MyListings = () => {
       }
 
       // Correct backend URL for booking list
-      // const bookingsRes = await axios.get(
-      //   `http://127.0.0.1:8000/api/properties/bookings/list/?property=${propertyId}`,
-      //   { headers: { Authorization: `Bearer ${token}` } }
-      // );
-
       const bookingsRes = await axios.get(
-        `https://majorproject-esyrent.onrender.com/api/properties/bookings/list/?property=${propertyId}`,
+        `http://127.0.0.1:8000/api/properties/bookings/list/?property=${propertyId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -108,13 +93,8 @@ const MyListings = () => {
       const bookingId = bookingsRes.data[0].id;
 
       // Correct backend URL for booking delete
-      // await axios.delete(
-      //   `http://127.0.0.1:8000/api/properties/bookings/${bookingId}/`,
-      //   { headers: { Authorization: `Bearer ${token}` } }
-      // );
-
       await axios.delete(
-        `https://majorproject-esyrent.onrender.com/api/properties/bookings/${bookingId}/`,
+        `http://127.0.0.1:8000/api/properties/bookings/${bookingId}/`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
