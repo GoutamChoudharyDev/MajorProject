@@ -37,7 +37,8 @@ DEBUG = True
 # ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 ALLOWED_HOSTS = ["*"]
 
-WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
+# WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
+WEBSITE_URL = "https://majorproject-7-i3ce.onrender.com"  # Base URL for the website
 
 SITE_ID = 1  # Default site ID for Django sites framework
 
@@ -245,9 +246,10 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # vite/React
-    "http://localhost:8000",  # Django development server   
+    # "http://localhost:5173",  # vite/React
+    # "http://localhost:8000",  # Django development server   
     "https://major-project-er.vercel.app/",
+    "https://majorproject-7-i3ce.onrender.com",
 ]
 
 
