@@ -38,23 +38,6 @@ const ListingDetails = () => {
         fetchListing();
     }, [id]);
 
-    // useEffect(() => {
-    //     const fetchListing = async () => {
-    //         try {
-    //             const response = await axios.get(
-    //                 `https://majorproject-esyrent.onrender.com/api/properties/${id}/`
-    //             );
-    //             setListing(response.data);
-    //         } catch (error) {
-    //             console.error("Error fetching listing:", error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
-    //     fetchListing();
-    // }, [id]);
-
-
     // Animate content after loading
     useEffect(() => {
         if (!loading && pageRef.current) {
@@ -86,6 +69,7 @@ const ListingDetails = () => {
         );
     }
 
+
     if (!listing) {
         return <p className="text-red-600">Listing not found.</p>;
     }
@@ -114,14 +98,12 @@ const ListingDetails = () => {
                 <div className="grid gap-4 mb-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 fade-item">
                     <img
                         src={listing.images[0]?.image ? `http://127.0.0.1:8000/${listing.images[0].image}` : "default-placeholder.jpg"}
-                        // src={listing.images[0]?.image ? `https://majorproject-esyrent.onrender.com/${listing.images[0].image}` : "default-placeholder.jpg"}
                         alt="Main"
                         className="w-full h-50 object-cover rounded-lg md:col-span-2 md:row-span-2 md:h-full"
                     />
                     {listing.images[1] && (
                         <img
                             src={`http://127.0.0.1:8000/${listing.images[1].image}`}
-                            // src={listing.images[0]?.image ? `https://majorproject-esyrent.onrender.com/${listing.images[0].image}` : "default-placeholder.jpg"}
                             alt="Second"
                             className="w-full h-50 object-cover rounded-lg"
                         />
@@ -129,7 +111,7 @@ const ListingDetails = () => {
                     {listing.images[2] && (
                         <img
                             src={`http://127.0.0.1:8000/${listing.images[2].image}`}
-                            // src={listing.images[0]?.image ? `https://majorproject-esyrent.onrender.com/${listing.images[0].image}` : "default-placeholder.jpg"}
+                            alt="Third"
                             className="w-full h-50 object-cover rounded-lg"
                         />
                     )}

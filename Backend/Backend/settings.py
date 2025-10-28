@@ -31,13 +31,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = []
 # ...............changes......................
-# ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
 
@@ -90,10 +88,8 @@ INSTALLED_APPS = [
     "property",  # Custom app for property management
 ]
 
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # Middleware for handling CORS
     "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
@@ -104,7 +100,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = "Backend.urls"
 
 TEMPLATES = [
@@ -134,26 +129,18 @@ WSGI_APPLICATION = "Backend.wsgi.application"
 
 # if USE_POSTGRES:
     # PostgreSQL configuration for collaboration
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv("SUPABASE_DB_NAME"),
-#         'USER': os.getenv("SUPABASE_DB_USER"),
-#         'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
-#         'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
-#         'PORT': os.getenv("SUPABASE_DB_PORT"),
-#         'OPTIONS': {
-#             'sslmode': 'require',   # ✅ Supabase requires SSL
-#         },
-#     },
-# }
-
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("SUPABASE_DB_NAME"),
+        'USER': os.getenv("SUPABASE_DB_USER"),
+        'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
+        'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
+        'PORT': os.getenv("SUPABASE_DB_PORT"),
+        'OPTIONS': {
+            'sslmode': 'require',   # ✅ Supabase requires SSL
+        },
+    },
 }
 
 REST_FRAMEWORK = {
@@ -200,9 +187,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # optional, if you already have static folder
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 MEDIA_URL = "/media/"
 # changes.....
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
