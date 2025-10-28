@@ -1,170 +1,80 @@
-import axios from "axios";
-import { useState } from "react";
-import { FaUser, FaEnvelope, FaCalendarAlt, FaUsers, FaPhone } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react";
+import { FaHome, FaRocket, FaShieldAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-const BookingPage = () => {
-    const { id } = useParams();
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+const About = () => {
+  const navigate = useNavigate();
 
-    const [bookingData, setBookingData] = useState({
-        property: id,
-        name: "",
-        email: "",
-        phone: "",
-        check_in: "",
-        check_out: "",
-        guests: 1
-    });
+  const handleGetStarted = () => {
+    navigate("/"); // Redirect to home page
+  };
 
-    const [bookingSuccess, setBookingSuccess] = useState(false);
-    const [bookingError, setBookingError] = useState("");
+  return (
+    <div className="bg-slate-900 min-h-screen text-gray-100">
+      {/* Page Header */}
+      <div className="text-center py-16 px-4 bg-gradient-to-r from-slate-900 via-gray-800 to-slate-900 rounded-b-3xl shadow-xl">
+        <h1 className="text-4xl md:text-5xl font-extrabold mb-3">
+          <span className="text-yellow-400">E</span>asy
+          <span className="text-red-500">R</span>ent
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300">
+          Your trusted platform for finding dream rentals with ease and comfort.
+        </p>
+      </div>
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            const token = localStorage.getItem("access_token");
-
-            await axios.post(
-                "http://127.0.0.1:8000/api/properties/bookings/",
-                { ...bookingData, property: id },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            setBookingSuccess(true);
-            setBookingError("");
-
-            // Reset with correct snake_case keys
-            setBookingData({
-                property: id,
-                name: "",
-                email: "",
-                phone: "",
-                check_in: "",
-                check_out: "",
-                guests: 1
-            });
-
-            setTimeout(() => {
-                navigate("/");
-            }, 1000);
-        } catch (error) {
-            console.error("Booking failed:", error);
-            setBookingError("Booking failed. Please try again.");
-        }
-    };
-
-    return (
-        <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-slate-800 via-gray-900 to-black p-4">
-            <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg shadow-xl rounded-2xl md:p-8 p-4 border border-white/20">
-                {/* Heading */}
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">
-                    🏠 Reserve Your Stay
-                </h2>
-
-                {/* Booking Form */}
-                <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* Name */}
-                    <div className="flex items-center border border-gray-300 rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
-                        <FaUser className="text-gray-400 mr-3" />
-                        <input
-                            type="text"
-                            placeholder="Your Name"
-                            value={bookingData.name}
-                            onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
-                            className="bg-transparent outline-none w-full text-white placeholder-gray-300"
-                            required
-                        />
-                    </div>
-
-                    {/* Email */}
-                    <div className="flex items-center border border-gray-300 rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
-                        <FaEnvelope className="text-gray-400 mr-3" />
-                        <input
-                            type="email"
-                            placeholder="Your Email"
-                            value={bookingData.email}
-                            onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                            className="bg-transparent outline-none w-full text-white placeholder-gray-300"
-                            required
-                        />
-                    </div>
-
-                    {/* Phone number */}
-                    <div className="flex items-center border border-gray-300 rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
-                        <FaPhone className="text-gray-400 mr-3" />
-                        <input
-                            type="tel"
-                            placeholder="Your Mobile Number"
-                            value={bookingData.phone}
-                            onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
-                            className="bg-transparent outline-none w-full text-white placeholder-gray-300"
-                            required
-                        />
-                    </div>
-
-                    {/* Check-in */}
-                    <div className="flex items-center border border-gray-300 rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
-                        <FaCalendarAlt className="text-gray-400 mr-3" />
-                        <input
-                            type="date"
-                            value={bookingData.check_in}
-                            onChange={(e) => setBookingData({ ...bookingData, check_in: e.target.value })}
-                            className="bg-transparent outline-none w-full text-white placeholder-gray-300"
-                            required
-                        />
-                    </div>
-
-                    {/* Check-out */}
-                    <div className="flex items-center border border-gray-300 rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
-                        <FaCalendarAlt className="text-gray-400 mr-3" />
-                        <input
-                            type="date"
-                            value={bookingData.check_out}
-                            onChange={(e) => setBookingData({ ...bookingData, check_out: e.target.value })}
-                            className="bg-transparent outline-none w-full text-white placeholder-gray-300"
-                            required
-                        />
-                    </div>
-
-                    {/* Guests */}
-                    <div className="flex items-center border border-gray-300 rounded-lg p-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
-                        <FaUsers className="text-gray-400 mr-3" />
-                        <input
-                            type="number"
-                            min={1}
-                            placeholder="Guests"
-                            value={bookingData.guests}
-                            onChange={(e) => setBookingData({ ...bookingData, guests: Number(e.target.value) })}
-                            className="bg-transparent outline-none w-full text-white placeholder-gray-300"
-                            required
-                        />
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className={`w-full py-3 rounded-lg text-white font-semibold shadow-lg transition-all duration-200 
-                        ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
-                    >
-                        {loading ? "Booking..." : "Confirm Booking"}
-                    </button>
-
-                </form>
-
-                {/* Feedback Messages */}
-                {bookingSuccess && <p className="text-green-400 mt-4 text-center font-semibold">Booking Successful!</p>}
-                {bookingError && <p className="text-red-500 mt-4 text-center font-semibold">{bookingError}</p>}
-            </div>
+      {/* About Cards Section */}
+      <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Mission Card */}
+        <div className="bg-slate-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <FaHome className="text-yellow-400 text-4xl mb-4" />
+          <h2 className="text-2xl font-semibold mb-3 text-white">Our Mission</h2>
+          <p className="text-gray-300">
+            At EasyRent, our mission is to make renting properties simple, transparent, and enjoyable.
+            We connect tenants and property owners efficiently.
+          </p>
         </div>
-    )
-}
 
-export default BookingPage
+        {/* Vision Card */}
+        <div className="bg-slate-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <FaRocket className="text-red-500 text-4xl mb-4" />
+          <h2 className="text-2xl font-semibold mb-3 text-white">Our Vision</h2>
+          <p className="text-gray-300">
+            We envision a world where finding your next home is stress-free. Using intuitive design
+            and technology, we provide the best rental experience.
+          </p>
+        </div>
+
+        {/* Why Choose Us Card */}
+        <div className="bg-slate-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <FaShieldAlt className="text-yellow-400 text-4xl mb-4" />
+          <h2 className="text-2xl font-semibold mb-3 text-white">Why Choose EasyRent?</h2>
+          <ul className="list-disc list-inside text-gray-300 space-y-2">
+            <li>Verified listings with accurate details and images.</li>
+            <li>Easy search and filter options for the perfect property.</li>
+            <li>Secure communication between tenants and owners.</li>
+            <li>24/7 support for a smooth rental experience.</li>
+            <li>User-friendly interface optimized for all devices.</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Call to Action Section */}
+      <div className="text-center bg-gradient-to-r from-slate-900 via-gray-800 to-slate-900 shadow-xl rounded-t-3xl mx-6 md:mx-20">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-yellow-400 pt-12">
+          Ready to find your next home?
+        </h2>
+        <p className="text-gray-300 mb-6 px-6">
+          Join EasyRent today and explore thousands of verified properties.
+        </p>
+        <button
+          onClick={handleGetStarted}
+          className="bg-red-500 text-white font-semibold py-3 px-8 mb-12 rounded-full shadow-lg hover:bg-red-600 transition"
+        >
+          Get Started
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default About;
