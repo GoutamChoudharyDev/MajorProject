@@ -14,6 +14,7 @@ db.sqlite3-journal
 .env.development.local
 .env.test.local
 .env.production.local
+.env.example
 
 # Virtual environment
 venv/
