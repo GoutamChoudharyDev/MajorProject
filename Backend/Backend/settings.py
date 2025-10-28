@@ -10,11 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
-import os
 from dotenv import load_dotenv
-# changes........
 import dj_database_url
 
 # Load environment variables from .env file
@@ -129,18 +128,22 @@ WSGI_APPLICATION = "Backend.wsgi.application"
 
 # if USE_POSTGRES:
     # PostgreSQL configuration for collaboration
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv("SUPABASE_DB_NAME"),
+#         'USER': os.getenv("SUPABASE_DB_USER"),
+#         'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
+#         'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
+#         'PORT': os.getenv("SUPABASE_DB_PORT"),
+#         'OPTIONS': {
+#             'sslmode': 'require',   # ✅ Supabase requires SSL
+#         },
+#     },
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("SUPABASE_DB_NAME"),
-        'USER': os.getenv("SUPABASE_DB_USER"),
-        'PASSWORD': os.getenv("SUPABASE_DB_PASSWORD"),
-        'HOST': os.getenv("SUPABASE_DB_HOST"),  # ✅ must be db.<project>.supabase.co
-        'PORT': os.getenv("SUPABASE_DB_PORT"),
-        'OPTIONS': {
-            'sslmode': 'require',   # ✅ Supabase requires SSL
-        },
-    },
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"), conn_max_age=600, ssl_require=True)
 }
 
 REST_FRAMEWORK = {
