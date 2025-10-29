@@ -11,6 +11,8 @@ const Card = ({ id, title, location, price, images, booked }) => {
   // Ensure images is always an array
   const safeImages = Array.isArray(images) ? images : [];
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   // handleClick
   const handleClick = () => {
     if (id) {
@@ -51,11 +53,18 @@ const Card = ({ id, title, location, price, images, booked }) => {
         )}
 
         <img
+          // src={
+          //   safeImages[currentIndex]
+          //     ? `http://127.0.0.1:8000/${safeImages[currentIndex].image}`
+          //     : '/default-placeholder.jpg'
+          // }
+
           src={
             safeImages[currentIndex]
-              ? `http://127.0.0.1:8000/${safeImages[currentIndex].image}`
+              ? `${API_BASE_URL}/${safeImages[currentIndex].image}`
               : '/default-placeholder.jpg'
           }
+
           alt={title}
           className="w-full h-full cursor-pointer object-cover transition-transform duration-500"
         />

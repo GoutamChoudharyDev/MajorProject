@@ -7,6 +7,7 @@ const BookingPage = () => {
     const { id } = useParams();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     const [bookingData, setBookingData] = useState({
         property: id,
@@ -27,8 +28,19 @@ const BookingPage = () => {
         try {
             const token = localStorage.getItem("access_token");
 
+            // await axios.post(
+            //     "http://127.0.0.1:8000/api/properties/bookings/",
+            //     { ...bookingData, property: id },
+            //     {
+            //         headers: {
+            //             Authorization: `Bearer ${token}`,
+            //             "Content-Type": "application/json",
+            //         },
+            //     }
+            // );
+
             await axios.post(
-                "http://127.0.0.1:8000/api/properties/bookings/",
+                `${API_BASE_URL}/api/properties/bookings/`,
                 { ...bookingData, property: id },
                 {
                     headers: {

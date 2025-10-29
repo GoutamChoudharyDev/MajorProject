@@ -21,6 +21,8 @@ const Signup = () => {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
 
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
+
     // Handle Submit
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,7 +43,14 @@ const Signup = () => {
 
         //Connect React Frontend to Django using fetch..............
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
+            // const response = await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
+            //     username,
+            //     email,
+            //     password,
+            //     password2,
+            // });
+
+            const response = await axios.post(`${API_BASE_URL}/api/accounts/register/`, {
                 username,
                 email,
                 password,

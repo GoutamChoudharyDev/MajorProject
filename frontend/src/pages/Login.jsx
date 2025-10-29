@@ -18,6 +18,8 @@ const Login = ({ setIsLoggedIn }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
+
     // Handle Submit
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,12 +30,18 @@ const Login = ({ setIsLoggedIn }) => {
         // Basic validation
         if (!email || !password) {
             setError('Both email and password are required!');
+            setLoading(false);
             return;
         }
 
         // Connect frontend with Django(Backend)......
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
+            // const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
+            //     email,
+            //     password
+            // });
+
+            const response = await axios.post(`${API_BASE_URL}/api/accounts/login/`, {
                 email,
                 password
             });

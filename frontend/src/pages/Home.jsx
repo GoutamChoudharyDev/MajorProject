@@ -18,11 +18,16 @@ const Home = ({ isLoggedIn, handleLogout }) => {
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   // Fetch listings
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/properties/");
+        // const response = await axios.get("http://127.0.0.1:8000/api/properties/");
+
+        const response = await axios.get(`${API_BASE_URL}/api/properties/`);
+
         setAllListings(response.data); // store all listings from backend
       } catch (error) {
         console.error("Error fetching listings:", error);

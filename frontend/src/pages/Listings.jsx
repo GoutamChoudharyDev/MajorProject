@@ -17,6 +17,8 @@ const Listings = ({ setListings }) => {
 
   const navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const [loading, setLoading] = useState(false);
   const [previews, setPreviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,8 +91,19 @@ const Listings = ({ setListings }) => {
     try {
       const token = localStorage.getItem("access_token"); // or wherever you store your JWT
 
+      // const response = await axios.post(
+      //   "http://127.0.0.1:8000/api/properties/create/",
+      //   data,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
+
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/properties/create/",
+        `${API_BASE_URL}/api/properties/create/`,
         data,
         {
           headers: {

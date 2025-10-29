@@ -32,6 +32,8 @@ const App = () => {
   // useState for listing
   const [listings, setListings] = useState([]);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   // Check token on load 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -48,16 +50,27 @@ const App = () => {
       if (!access_token) {
         console.warn("No access token found, skipping logout request.");
       } else {
+        // await axios.post(
+        //   'http://localhost:8000/api/accounts/logout/',
+        //   { refresh_token }, // body data
+        //   {
+        //     headers: {
+        //       'Authorization': `Bearer ${access_token}`,
+        //       'Content-Type': 'application/json',
+        //     }
+        //   }
+        // );
+
         await axios.post(
-          'http://localhost:8000/api/accounts/logout/',
-          { refresh_token }, // body data
-          {
-            headers: {
-              'Authorization': `Bearer ${access_token}`,
-              'Content-Type': 'application/json',
-            }
-          }
-        );
+        `${API_BASE_URL}/api/accounts/logout/`, // ✅ Use env variable
+        { refresh_token },
+        {
+          headers: {
+            'Authorization': `Bearer ${access_token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
       }
 
     } catch (error) {
