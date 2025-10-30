@@ -30,7 +30,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = []
 # ...............changes......................
@@ -248,7 +249,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     # "http://localhost:5173",  # vite/React
     # "http://localhost:8000",  # Django development server   
-    "https://major-project-er.vercel.app/",
+    "https://major-project-er.vercel.app",
     "https://majorproject-7-i3ce.onrender.com",
 ]
 
