@@ -91,6 +91,7 @@ const Listings = ({ setListings }) => {
     try {
       const token = localStorage.getItem("access_token"); // or wherever you store your JWT
 
+      // Local............
       // const response = await axios.post(
       //   "http://127.0.0.1:8000/api/properties/create/",
       //   data,

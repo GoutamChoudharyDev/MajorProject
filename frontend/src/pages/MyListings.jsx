@@ -21,6 +21,7 @@ const MyListings = () => {
           return;
         }
 
+        // Local...........
         // const response = await axios.get(
         //   "http://127.0.0.1:8000/api/properties/mylistings/",
         //   { headers: { Authorization: `Bearer ${token}` } }
@@ -61,6 +62,7 @@ const MyListings = () => {
         return;
       }
 
+      // Local...........
       // await axios.delete(
       //   `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
       //   { headers: { Authorization: `Bearer ${token}` } }
@@ -91,7 +93,7 @@ const MyListings = () => {
         return;
       }
 
-      // Correct backend URL for booking list
+      // Local...........
       // const bookingsRes = await axios.get(
       //   `http://127.0.0.1:8000/api/properties/bookings/list/?property=${propertyId}`,
       //   { headers: { Authorization: `Bearer ${token}` } }
@@ -109,6 +111,7 @@ const MyListings = () => {
 
       const bookingId = bookingsRes.data[0].id;
 
+      // Local...........
       // Correct backend URL for booking delete
       // await axios.delete(
       //   `http://127.0.0.1:8000/api/properties/bookings/${bookingId}/`,
@@ -174,7 +177,9 @@ const MyListings = () => {
 
             {listing.images && listing.images[0] ? (
               <img
+                // Local...........
                 // src={`http://127.0.0.1:8000/${listing.images[0].image}`}
+                
                 src={`${API_BASE_URL}/${listing.images[0].image}`}
                 alt={listing.title}
                 className="w-full h-48 object-cover"

@@ -96,6 +96,8 @@ const EditListing = () => {
 
     try {
       const token = localStorage.getItem("access_token");
+
+      // Local............
       // await axios.put(
       //   `http://127.0.0.1:8000/api/properties/mylistings/${id}/`,
       //   data,

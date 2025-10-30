@@ -34,8 +34,8 @@ const Login = ({ setIsLoggedIn }) => {
             return;
         }
 
-        // Connect frontend with Django(Backend)......
         try {
+            // Local............
             // const response = await axios.post('http://127.0.0.1:8000/api/accounts/login/', {
             //     email,
             //     password
@@ -46,10 +46,7 @@ const Login = ({ setIsLoggedIn }) => {
                 password
             });
 
-            // console.log("Login response:", response.data); // Add this line
-
             if (response.status === 200) {
-                // const { access, refresh } = response.data;
 
                 const { token } = response.data;
 

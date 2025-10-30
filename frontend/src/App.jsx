@@ -50,6 +50,7 @@ const App = () => {
       if (!access_token) {
         console.warn("No access token found, skipping logout request.");
       } else {
+        // Local...........
         // await axios.post(
         //   'http://localhost:8000/api/accounts/logout/',
         //   { refresh_token }, // body data
@@ -62,7 +63,7 @@ const App = () => {
         // );
 
         await axios.post(
-        `${API_BASE_URL}/api/accounts/logout/`, // ✅ Use env variable
+        `${API_BASE_URL}/api/accounts/logout/`,
         { refresh_token },
         {
           headers: {

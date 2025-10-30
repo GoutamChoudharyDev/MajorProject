@@ -28,6 +28,7 @@ const BookingPage = () => {
         try {
             const token = localStorage.getItem("access_token");
 
+            // Local............
             // await axios.post(
             //     "http://127.0.0.1:8000/api/properties/bookings/",
             //     { ...bookingData, property: id },
@@ -39,6 +40,7 @@ const BookingPage = () => {
             //     }
             // );
 
+            //Deployment.......... 
             await axios.post(
                 `${API_BASE_URL}/api/properties/bookings/`,
                 { ...bookingData, property: id },

@@ -53,6 +53,7 @@ const Card = ({ id, title, location, price, images, booked }) => {
         )}
 
         <img
+          // Local...........
           // src={
           //   safeImages[currentIndex]
           //     ? `http://127.0.0.1:8000/${safeImages[currentIndex].image}`

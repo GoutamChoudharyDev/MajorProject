@@ -25,6 +25,7 @@ const ListingDetails = () => {
     useEffect(() => {
         const fetchListing = async () => {
             try {
+                // Local..........
                 // const response = await axios.get(
                 //     `http://127.0.0.1:8000/api/properties/` // fetch all properties
                 // );
@@ -104,14 +105,17 @@ const ListingDetails = () => {
             {listing.images && listing.images.length > 0 ? (
                 <div className="grid gap-4 mb-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 fade-item">
                     <img
+                        // Local............
                         // src={listing.images[0]?.image ? `http://127.0.0.1:8000/${listing.images[0].image}` : "default-placeholder.jpg"}
-                        src={`${API_BASE_URL}/${listing.images[0].image}`}
+                        src={listing.images[0]?.image ?`${API_BASE_URL}/${listing.images[0].image}` : "default-placeholder.jpg"}
                         alt="Main"
                         className="w-full h-50 object-cover rounded-lg md:col-span-2 md:row-span-2 md:h-full"
                     />
                     {listing.images[1] && (
                         <img
+                            // Local............
                             // src={`http://127.0.0.1:8000/${listing.images[1].image}`}
+
                             src={`${API_BASE_URL}/${listing.images[1].image}`}
                             alt="Second"
                             className="w-full h-50 object-cover rounded-lg"
@@ -119,7 +123,9 @@ const ListingDetails = () => {
                     )}
                     {listing.images[2] && (
                         <img
+                            // Local............
                             // src={`http://127.0.0.1:8000/${listing.images[2].image}`}
+
                             src={`${API_BASE_URL}/${listing.images[2].image}`}
                             alt="Third"
                             className="w-full h-50 object-cover rounded-lg"
