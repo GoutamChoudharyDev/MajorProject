@@ -60,10 +60,17 @@ const Card = ({ id, title, location, price, images, booked }) => {
           //     : '/default-placeholder.jpg'
           // }
 
+          // src={
+          //   safeImages[currentIndex]
+          //     ? `${API_BASE_URL}/${safeImages[currentIndex].image}`
+          //     : '/default-placeholder.jpg'
+          // }
+
+          // changes....
           src={
             safeImages[currentIndex]
-              ? `${API_BASE_URL}/${safeImages[currentIndex].image}`
-              : '/default-placeholder.jpg'
+              ? `${API_BASE_URL}${safeImages[currentIndex].image.startsWith("/") ? "" : "/"}${safeImages[currentIndex].image}`
+              : "/default-placeholder.jpg"
           }
 
           alt={title}
