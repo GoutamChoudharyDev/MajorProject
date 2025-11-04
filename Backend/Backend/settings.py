@@ -16,6 +16,11 @@ from datetime import timedelta
 from dotenv import load_dotenv
 import dj_database_url
 
+# cloudinary
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 # Load environment variables from .env file
 load_dotenv()
 
@@ -92,6 +97,9 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",  # Registration endpoints for REST Auth
 
     "property",  # Custom app for property management
+
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 MIDDLEWARE = [
@@ -269,3 +277,18 @@ REST_AUTH = {
     "USE_JWT": True,  # Use JWT for authentication
     "JWT_AUTH_HTTPONLY": False
 }
+
+# ================================
+# Cloudinary Configuration
+# ================================
+cloudinary.config( 
+    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME"), 
+    api_key = os.getenv("CLOUDINARY_API_KEY"), 
+    api_secret = os.getenv("CLOUDINARY_API_SECRET"),
+)
+
+# ================================
+# Media Storage - Cloudinary
+# ================================
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'  # You can keep this for compatibility, Cloudinary will handle actual storage
