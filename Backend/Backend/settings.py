@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
+# SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -36,7 +37,10 @@ DEBUG = False
 # ALLOWED_HOSTS = []
 # ...............changes......................
 # ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*"]
+
+# changes.......
+ALLOWED_HOSTS = ["majorproject-7-i3ce.onrender.com", "localhost", "127.0.0.1"]
 
 # WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
 WEBSITE_URL = "https://majorproject-7-i3ce.onrender.com"  # Base URL for the website
@@ -253,6 +257,11 @@ CORS_ALLOWED_ORIGINS = [
     "https://majorproject-7-i3ce.onrender.com",
 ]
 
+# changes.....
+CSRF_TRUSTED_ORIGINS = [
+    "https://majorproject-7-i3ce.onrender.com",
+    "https://major-project-er.vercel.app",
+]
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
 

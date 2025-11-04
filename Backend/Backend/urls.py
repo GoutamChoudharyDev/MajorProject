@@ -30,5 +30,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/accounts/", include('accounts.urls')),
     path("api/properties/", include('property.urls')),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+# 👇 This part ensures media files (images, uploads) are served even when DEBUG=False
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
