@@ -42,7 +42,8 @@ const BookingPage = () => {
 
             //Deployment.......... 
             await axios.post(
-                `${API_BASE_URL}/api/properties/bookings/`,
+                // `${API_BASE_URL}/api/properties/bookings/`,
+                "https://majorproject-7-i3ce.onrender.com/api/properties/bookings/",
                 { ...bookingData, property: id },
                 {
                     headers: {
