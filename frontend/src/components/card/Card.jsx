@@ -68,8 +68,12 @@ const Card = ({ id, title, location, price, images, booked }) => {
 
           // changes....
           src={
-            safeImages[currentIndex]
-              ? `${API_BASE_URL}${safeImages[currentIndex].image.startsWith("/") ? "" : "/"}${safeImages[currentIndex].image}`
+            safeImages[currentIndex]?.image
+              ? (
+                safeImages[currentIndex].image.startsWith("http")
+                  ? safeImages[currentIndex].image
+                  : `${API_BASE_URL}/${safeImages[currentIndex].image}`
+              )
               : "/default-placeholder.jpg"
           }
 
