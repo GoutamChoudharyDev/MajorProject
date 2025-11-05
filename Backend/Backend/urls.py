@@ -33,5 +33,4 @@ urlpatterns = [
 ]
 # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# 👇 This part ensures media files (images, uploads) are served even when DEBUG=False
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

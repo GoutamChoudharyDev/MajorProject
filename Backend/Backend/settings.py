@@ -27,32 +27,17 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = "django-insecure-73t0g!=i6#-v#=e1a$j=)v6cbtdo+1jywwci#$x$nzxyb3+1q1"
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = False
 
-# ALLOWED_HOSTS = []
-# ...............changes......................
-# ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-# ALLOWED_HOSTS = ["*"]
-
-# changes.......
-# ALLOWED_HOSTS = ["majorproject-7-i3ce.onrender.com", "localhost", "127.0.0.1"]
 ALLOWED_HOSTS = ["majorproject-7-i3ce.onrender.com", ".vercel.app", "localhost"]
 
 # WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
 WEBSITE_URL = "https://majorproject-7-i3ce.onrender.com"  # Base URL for the website
 
 SITE_ID = 1  # Default site ID for Django sites framework
-
 
 # ...................................................
 # ================================
@@ -104,10 +89,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # Middleware for handling CORS
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware", 
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",  # Middleware for handling CORS
     "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -138,10 +123,6 @@ WSGI_APPLICATION = "Backend.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# Check if we're using PostgreSQL (for production/collaboration) or SQLite (for development)
-# USE_POSTGRES = os.getenv('USE_POSTGRES', 'False').lower() == 'true'
 
 # if USE_POSTGRES:
     # PostgreSQL configuration for collaboration
@@ -178,7 +159,6 @@ REST_FRAMEWORK = {
 }
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -197,19 +177,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -232,11 +207,6 @@ cloudinary.config(
 # Media Storage - Cloudinary
 # ================================
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-# MEDIA_ROOT = BASE_DIR / "media"  # Directory for uploaded media files
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -279,7 +249,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://majorproject-7-i3ce.onrender.com",
 ]
 
-# changes.....
 CSRF_TRUSTED_ORIGINS = [
     "https://majorproject-7-i3ce.onrender.com",
     "https://major-project-er.vercel.app",

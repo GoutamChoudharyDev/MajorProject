@@ -17,7 +17,6 @@ class Property(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # <- automatically sets current timestamp
-    # owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='properties')
 
     def __str__(self):
         return self.title
