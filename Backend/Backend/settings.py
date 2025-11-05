@@ -44,23 +44,36 @@ SITE_ID = 1  # Default site ID for Django sites framework
 # Email Configuration
 # ================================
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")  # default to Gmail
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")  # default to Gmail
+# EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+# EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")          # your email, e.g., your_email@gmail.com
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # your app password
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# # Optional: admin email to receive notifications
+# ADMIN_EMAIL = "rc.goutam.choudhary@gmail.com"
+# .............................................................
+
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")          # your email, e.g., your_email@gmail.com
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # your app password
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "rc.goutam.choudhary@gmail.com")
 
-# Optional: admin email to receive notifications
-ADMIN_EMAIL = "rc.goutam.choudhary@gmail.com"
-# .............................................................
-
-# ✅ Use console backend in production (Render) to prevent SMTP connection errors
-if not DEBUG:
+# Automatic fallback to console backend if credentials missing
+if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
+    print("⚠️ Email credentials not found — using console backend instead.")
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+
 # Application definition
 
 INSTALLED_APPS = [
