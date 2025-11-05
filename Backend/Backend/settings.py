@@ -118,7 +118,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware", 
     "django.contrib.sessions.middleware.SessionMiddleware",
-    # "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
+    "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -310,7 +310,7 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
 REST_AUTH = {
     "USE_JWT": True,  # Use JWT for authentication
     "JWT_AUTH_HTTPONLY": True
-    
+
     # for local
     # "JWT_AUTH_HTTPONLY": False
 }
