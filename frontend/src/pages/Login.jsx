@@ -17,6 +17,7 @@ const Login = ({ setIsLoggedIn }) => {
     // state for error and success
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    let navigate = useNavigate();
 
     const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -74,9 +75,6 @@ const Login = ({ setIsLoggedIn }) => {
         }
 
     };
-
-    // Navigate 
-    let navigate = useNavigate();
 
     return (
         <div
