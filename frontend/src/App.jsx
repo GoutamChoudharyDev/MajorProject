@@ -99,7 +99,7 @@ const App = () => {
           path='/'
           element={
             <motion.div variants={slideVariants} initial="initial" animate="animate" exit="exit">
-              <Home isLoggedIn={isLoggedIn} handleLogout={handleLogout} listings={listings} />
+              <Home isLoggedIn={isLoggedIn} handleLogout={handleLogout} isLoggingOut={isLoggingOut} listings={listings} />
             </motion.div>
           }
         />

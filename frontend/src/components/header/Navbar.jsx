@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 // react icons........
 import { FiSearch } from "react-icons/fi";
 
-const Navbar = ({ isLoggedIn, handleLogout, onSearch }) => {
+const Navbar = ({ isLoggedIn, handleLogout, isLoggingOut, onSearch }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -120,8 +120,8 @@ const Navbar = ({ isLoggedIn, handleLogout, onSearch }) => {
                             onClick={handleLogout}
                             disabled={isLoggingOut}
                             className={`text-white border border-white px-4 py-1 rounded-full transition ${isLoggingOut
-                                    ? "opacity-50 cursor-not-allowed"
-                                    : "hover:bg-white hover:text-slate-900"
+                                ? "opacity-50 cursor-not-allowed"
+                                : "hover:bg-white hover:text-slate-900"
                                 }`}
                         >
                             {isLoggingOut ? "Logging out..." : "Logout"}
