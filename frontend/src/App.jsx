@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -25,9 +25,11 @@ const slideVariants = {
 const App = () => {
   // To Navigate on the other page
   const navigate = useNavigate();
+  const location = useLocation();
 
   // UseState to Check login or not
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // useState for listing
   const [listings, setListings] = useState([]);
@@ -42,6 +44,9 @@ const App = () => {
 
   // Logout handler
   const handleLogout = async () => {
+    if (isLoggingOut) return; // prevent multiple clicks
+    setIsLoggingOut(true);
+
     try {
       const refresh_token = localStorage.getItem('refresh_token');
       const access_token = localStorage.getItem('access_token');
@@ -63,15 +68,15 @@ const App = () => {
         // );
 
         await axios.post(
-        `${API_BASE_URL}/api/accounts/logout/`,
-        { refresh_token },
-        {
-          headers: {
-            'Authorization': `Bearer ${access_token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+          `${API_BASE_URL}/api/accounts/logout/`,
+          { refresh_token },
+          {
+            headers: {
+              'Authorization': `Bearer ${access_token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
       }
 
     } catch (error) {
@@ -81,6 +86,7 @@ const App = () => {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       setIsLoggedIn(false);
+      setIsLoggingOut(false);
       navigate('/login');
     }
   };
