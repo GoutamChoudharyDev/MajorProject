@@ -179,8 +179,13 @@ const MyListings = () => {
               <img
                 // Local...........
                 // src={`http://127.0.0.1:8000/${listing.images[0].image}`}
-                
-                src={`${API_BASE_URL}/${listing.images[0].image}`}
+
+                // src={`${API_BASE_URL}/${listing.images[0].image}`}
+                src={
+                  listing.images[0].image.startsWith("http")
+                    ? listing.images[0].image
+                    : `${API_BASE_URL}/${listing.images[0].image}`
+                }
                 alt={listing.title}
                 className="w-full h-48 object-cover"
               />

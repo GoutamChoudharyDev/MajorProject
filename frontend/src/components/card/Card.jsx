@@ -67,12 +67,22 @@ const Card = ({ id, title, location, price, images, booked }) => {
           // }
 
           // changes....
+          // src={
+          //   safeImages[currentIndex]
+          //     ? `${API_BASE_URL}${safeImages[currentIndex].image.startsWith("/") ? "" : "/"}${safeImages[currentIndex].image}`
+          //     : "/default-placeholder.jpg"
+          // }
+
           src={
             safeImages[currentIndex]
-              ? `${API_BASE_URL}${safeImages[currentIndex].image.startsWith("/") ? "" : "/"}${safeImages[currentIndex].image}`
+              ? (
+                safeImages[currentIndex].image.startsWith("http")
+                  ? safeImages[currentIndex].image  // ✅ Cloudinary full URL
+                  : `${API_BASE_URL}/${safeImages[currentIndex].image}`  // ✅ Local development
+              )
               : "/default-placeholder.jpg"
           }
-
+          
           alt={title}
           className="w-full h-full cursor-pointer object-cover transition-transform duration-500"
         />

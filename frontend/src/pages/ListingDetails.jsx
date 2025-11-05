@@ -107,7 +107,17 @@ const ListingDetails = () => {
                     <img
                         // Local............
                         // src={listing.images[0]?.image ? `http://127.0.0.1:8000/${listing.images[0].image}` : "default-placeholder.jpg"}
-                        src={listing.images[0]?.image ?`${API_BASE_URL}/${listing.images[0].image}` : "default-placeholder.jpg"}
+                        // src={listing.images[0]?.image ?`${API_BASE_URL}/${listing.images[0].image}` : "default-placeholder.jpg"}
+                        src={
+                            listing.images[0]?.image
+                                ? (
+                                    listing.images[0].image.startsWith("http")
+                                        ? listing.images[0].image
+                                        : `${API_BASE_URL}/${listing.images[0].image}`
+                                )
+                                : "default-placeholder.jpg"
+                        }
+
                         alt="Main"
                         className="w-full h-50 object-cover rounded-lg md:col-span-2 md:row-span-2 md:h-full"
                     />
@@ -116,7 +126,12 @@ const ListingDetails = () => {
                             // Local............
                             // src={`http://127.0.0.1:8000/${listing.images[1].image}`}
 
-                            src={`${API_BASE_URL}/${listing.images[1].image}`}
+                            // src={`${API_BASE_URL}/${listing.images[1].image}`}
+                            src={
+                                listing.images[1].image.startsWith("http")
+                                    ? listing.images[1].image
+                                    : `${API_BASE_URL}/${listing.images[1].image}`
+                            }
                             alt="Second"
                             className="w-full h-50 object-cover rounded-lg"
                         />
@@ -125,8 +140,12 @@ const ListingDetails = () => {
                         <img
                             // Local............
                             // src={`http://127.0.0.1:8000/${listing.images[2].image}`}
-
-                            src={`${API_BASE_URL}/${listing.images[2].image}`}
+                            // src={`${API_BASE_URL}/${listing.images[2].image}`}
+                            src={
+                                listing.images[2].image.startsWith("http")
+                                    ? listing.images[2].image
+                                    : `${API_BASE_URL}/${listing.images[2].image}`
+                            }
                             alt="Third"
                             className="w-full h-50 object-cover rounded-lg"
                         />
