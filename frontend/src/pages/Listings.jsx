@@ -65,6 +65,9 @@ const Listings = ({ setListings }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Disable button
+    setLoading(true);
+
     // Validate at least 3 images
     const validImages = formData.images.filter((img) => img);
     if (validImages.length < 3) {
@@ -74,6 +77,7 @@ const Listings = ({ setListings }) => {
 
     if (validImages.length > 3) {
       alert("You can add only 3 images");
+      setLoading(false);
       return
     }
 
@@ -131,6 +135,9 @@ const Listings = ({ setListings }) => {
     } catch (error) {
       console.error(error);
       alert("Failed to submit listing. Please try again.");
+    } finally {
+      // Re-enable button after process finishes
+      setLoading(false);
     }
   };
 
@@ -243,7 +250,6 @@ const Listings = ({ setListings }) => {
               </div>
             ))}
 
-
             {/* Logic to Add Image */}
             {formData.images.length < 3 && (
               <button
@@ -312,7 +318,23 @@ const Listings = ({ setListings }) => {
             ${loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"} 
             text-white`}
           >
-            {loading ? "Adding..." : "Add Listing"}
+            {/* {loading ? "Adding..." : "Add Listing"} */}
+            {loading ? (
+              <span className="flex justify-center items-center gap-2">
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+                Adding...
+              </span>
+            ) : (
+              "Add Listing"
+            )}
           </button>
 
         </form>
