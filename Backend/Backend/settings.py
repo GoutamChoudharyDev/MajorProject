@@ -45,7 +45,8 @@ DEBUG = False
 # ALLOWED_HOSTS = ["*"]
 
 # changes.......
-ALLOWED_HOSTS = ["majorproject-7-i3ce.onrender.com", "localhost", "127.0.0.1"]
+# ALLOWED_HOSTS = ["majorproject-7-i3ce.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["majorproject-7-i3ce.onrender.com", ".vercel.app", "localhost"]
 
 # WEBSITE_URL = "http://localhost:8000"  # Base URL for the website
 WEBSITE_URL = "https://majorproject-7-i3ce.onrender.com"  # Base URL for the website
@@ -212,11 +213,11 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ================================
 # Cloudinary Configuration
