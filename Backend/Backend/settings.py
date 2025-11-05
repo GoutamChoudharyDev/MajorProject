@@ -39,6 +39,7 @@ WEBSITE_URL = "https://majorproject-7-i3ce.onrender.com"  # Base URL for the web
 
 SITE_ID = 1  # Default site ID for Django sites framework
 
+
 # ...................................................
 # ================================
 # Email Configuration
@@ -66,15 +67,17 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "rc.goutam.choudhary@gmail.com")
 
-# Automatic fallback to console backend if credentials missing
+# Fallback to console email backend if credentials missing
 if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
-    print("⚠️ Email credentials not found — using console backend instead.")
+    print("⚠️ Email credentials not found — using console backend.")
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 
-# Application definition
+# ================================
+# Installed Apps
+# ================================
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -105,12 +108,17 @@ INSTALLED_APPS = [
     "cloudinary_storage",
 ]
 
+
+# ================================
+# Middleware
+# ================================
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",  # Middleware for handling CORS
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware", 
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
+    # "allauth.account.middleware.AccountMiddleware",  # Middleware for Allauth account management
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -139,7 +147,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "Backend.wsgi.application"
 
 
+# ================================
 # Database
+# ================================
 
 # if USE_POSTGRES:
     # PostgreSQL configuration for collaboration
@@ -166,6 +176,10 @@ DATABASES = {
 }
 
 
+# ================================
+# REST Framework
+# ================================
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -175,7 +189,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+
+# ================================
 # Password validation
+# ================================
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -193,7 +210,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# ================================
 # Internationalization
+# ================================
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
@@ -201,7 +220,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# ================================
+# Static & Media
+# ================================
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -219,16 +240,19 @@ cloudinary.config(
     api_key = os.getenv("CLOUDINARY_API_KEY"), 
     api_secret = os.getenv("CLOUDINARY_API_SECRET"),
 )
-
-# ================================
-# Media Storage - Cloudinary
-# ================================
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+
+# ================================
+# Custom User Model
+# ================================
+AUTH_USER_MODEL = 'accounts.User'  # Custom user model
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'accounts.User'  # Custom user model
 
+# ================================
+# JWT Settings
+# ================================
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
@@ -259,6 +283,11 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
+
+# ================================
+# CORS & CSRF
+# ================================
+
 CORS_ALLOWED_ORIGINS = [
     # "http://localhost:5173",  # vite/React
     # "http://localhost:8000",  # Django development server   
@@ -273,7 +302,15 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included in CORS requests
 
+
+# ================================
+# REST Auth
+# ================================
+
 REST_AUTH = {
     "USE_JWT": True,  # Use JWT for authentication
-    "JWT_AUTH_HTTPONLY": False
+    "JWT_AUTH_HTTPONLY": True
+    
+    # for local
+    # "JWT_AUTH_HTTPONLY": False
 }
