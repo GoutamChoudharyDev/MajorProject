@@ -57,6 +57,10 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ADMIN_EMAIL = "rc.goutam.choudhary@gmail.com"
 # .............................................................
 
+# ✅ Use console backend in production (Render) to prevent SMTP connection errors
+if not DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    
 # Application definition
 
 INSTALLED_APPS = [
