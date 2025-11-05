@@ -17,8 +17,8 @@ const Login = ({ setIsLoggedIn }) => {
     // state for error and success
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    let navigate = useNavigate();
 
+    let navigate = useNavigate();
     const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     // Handle Submit
@@ -56,25 +56,25 @@ const Login = ({ setIsLoggedIn }) => {
 
                 // Update login state
                 setIsLoggedIn(true);
-
                 setSuccess(response.data.message || 'Login Successfully!');
                 setEmail('');
                 setPassword('');
 
-                // Navigate only on successful login
-                navigate('/');
+                // Delay for user to see success message
+                setTimeout(() => navigate('/'), 800);
             } else {
                 setError('Invalid Credentials');
             }
         } catch (error) {
             if (error.response && error.response.data) {
-                setError(error.response.data.error || 'Invald Credentials');
+                setError(error.response.data.error || 'Invalid Credentials');
             } else {
                 setError('Network Error')
             }
             console.log("Error", error);
+        } finally {
+            setLoading(false);
         }
-
     };
 
     return (
