@@ -47,8 +47,7 @@ const Login = ({ setIsLoggedIn }) => {
                 password
             });
 
-            if (response.status === 200) {
-
+            if (response.status === 200 && response.data.token) {
                 const { token } = response.data;
 
                 // save token to local storage
@@ -64,6 +63,8 @@ const Login = ({ setIsLoggedIn }) => {
 
                 // Navigate only on successful login
                 navigate('/');
+            } else {
+                setError('Invalid Credentials');
             }
         } catch (error) {
             if (error.response && error.response.data) {
